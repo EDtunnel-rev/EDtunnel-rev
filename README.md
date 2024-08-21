@@ -1,5 +1,7 @@
 # EDtunnel-rev
 
+中文版本说明：https://github.com/EDtunnel-rev/EDtunnel-rev/blob/main/README_ZH.md
+
 ## available branches and explain
 
 | Branch Name   | Description                                                   |
