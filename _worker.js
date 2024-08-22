@@ -741,94 +741,237 @@ ${วเลสSec}
 
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
-  <head>
-	<title>EDtunnel: วเลส configuration</title>
-	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!'>
-	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta property='og:site_name' content='EDtunnel: vless configuration' />
-	<meta property='og:type' content='website' />
-	<meta property='og:title' content='EDtunnel-rev - vless configuration and subscribe output' />
-	<meta property='og:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
-	<meta property='og:url' content='https://${hostName}/' />
-	<meta property='og:image' content='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}' />
-	<meta name='twitter:card' content='summary_large_image' />
-	<meta name='twitter:title' content='EDtunnel - vless configuration and subscribe output' />
-	<meta name='twitter:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
-	<meta name='twitter:url' content='https://${hostName}/' />
-	<meta name='twitter:image' content='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' />
-	<meta property='og:image:width' content='1500' />
-	<meta property='og:image:height' content='1500' />
-
-	<style>
-	body {
-	  font-family: Arial, sans-serif;
-	  background-color: #f0f0f0;
-	  color: #333;
-	  padding: 10px;
-	}
-
-	a {
-	  color: #1a0dab;
-	  text-decoration: none;
-	}
-	img {
-	  max-width: 100%;
-	  height: auto;
-	}
-
-	pre {
-	  white-space: pre-wrap;
-	  word-wrap: break-word;
-	  background-color: #fff;
-	  border: 1px solid #ddd;
-	  padding: 15px;
-	  margin: 10px 0;
-	}
-	/* Dark mode */
-	@media (prefers-color-scheme: dark) {
-	  body {
-		background-color: #333;
-		color: #f0f0f0;
-	  }
-
-	  a {
-		color: #9db4ff;
-	  }
-
-	  pre {
-		background-color: #282a36;
-		border-color: #6272a4;
-	  }
-	}
-	</style>
-
-	<!-- Add FontAwesome library -->
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-  </head>
-  `;
-
-	// Join output with newlines, wrap inside <html> and <body>
-	return `
-  <html>
-  ${htmlHead}
-  <body>
-  <pre style='background-color: transparent; border: none;'>${header}</pre>
-  <pre>${output}</pre>
-  </body>
-  <script>
-	function copyToClipboard(text) {
-	  navigator.clipboard.writeText(text)
-		.then(() => {
-		  alert("Copied to clipboard");
-		})
-		.catch((err) => {
-		  console.error("Failed to copy to clipboard:", err);
-		});
-	}
-  </script>
-  </html>`;
-}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDtunnel: วเลส configuration</title>
+    <meta name="description" content="This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!">
+    <meta name="keywords" content="EDtunnel, cloudflare pages, cloudflare worker, severless">
+    <meta property="og:site_name" content="EDtunnel: vless configuration" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EDtunnel-rev - vless configuration and subscribe output" />
+    <meta property="og:description" content="Use cloudflare pages and worker severless to implement วเลส protocol" />
+    <meta property="og:url" content="https://${hostName}/" />
+    <meta property="og:image" content="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EDtunnel - vless configuration and subscribe output" />
+    <meta name="twitter:description" content="Use cloudflare pages and worker severless to implement วเลส protocol" />
+    <meta name="twitter:url" content="https://${hostName}/" />
+    <meta name="twitter:image" content="https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky" />
+    <meta property="og:image:width" content="1500" />
+    <meta property="og:image:height" content="1500" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f3f6;
+            --text-color: #333;
+            --card-background: #fff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #3498db;
+                --secondary-color: #2ecc71;
+                --background-color: #1a1a1a;
+                --text-color: #f0f0f0;
+                --card-background: #2c2c2c;
+                --card-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+            }
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        pre {
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #27ae60;
+        }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .links a:hover {
+            background-color: #2980b9;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EDtunnel: วเลส Configuration</h1>
+        
+        <div class="card pulse">
+            <h2>Welcome to EDtunnel</h2>
+            <p>This function generates configuration for vless protocol. If you found this useful, please check our GitHub project:</p>
+            <a href="https://github.com/EDtunnel-rev/EDtunnel-rev" target="_blank" class="github-button">
+                <i class="fab fa-github"></i> EDtunnel-rev
+            </a>
+            <iframe src="https://ghbtns.com/github-btn.html?user=EDtunnel-rev&repo=EDtunnel-rev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+        </div>
+        
+        <div class="card">
+            <h2>Configuration</h2>
+            <div id="configContent"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Useful Links</h2>
+            <div class="links">
+                <a href="//${hostName}/sub/${userIDArray[0]}" target="_blank">
+                    <i class="fas fa-list"></i> vless节点订阅连接
+                </a>
+                <a href="clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}" target="_blank">
+                    <i class="fas fa-window-restore"></i> Clash for Windows 节点订阅连接
+                </a>
+                <a href="${clash_link}" target="_blank">
+                    <i class="fas fa-link"></i> Clash 节点订阅连接
+                </a>
+                <a href="${subbestip}" target="_blank">
+                    <i class="fas fa-trophy"></i> 优选IP自动节点订阅
+                </a>
+                <a href="clash://install-config?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-bolt"></i> Clash优选IP自动
+                </a>
+                <a href="sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-box"></i> singbox优选IP自动
+                </a>
+                <a href="sn://subscription?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-cat"></i> nekobox优选IP自动
+                </a>
+                <a href="v2rayng://install-config?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-v"></i> v2rayNG优选IP自动
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert("Copied to clipboard");
+                })
+                .catch((err) => {
+                    console.error("Failed to copy to clipboard:", err);
+                });
+        }
+        
+        // Function to populate the configuration content
+        function populateConfig() {
+            const configContent = document.getElementById('configContent');
+            // Here you would insert the logic to generate the configuration content
+            // For demonstration purposes, I'm using placeholder content
+            configContent.innerHTML = `
+                <h3>UUID: example-uuid</h3>
+                <pre>
+v2ray default ip
+---------------------------------------------------------------
+vless://example-uuid@example.com:443?encryption=none&security=tls&sni=example.com&fp=randomized&type=ws&host=example.com&path=%22F%3Fed%3D2048#example.com
+<button onclick="copyToClipboard('vless://example-uuid@example.com:443?encryption=none&security=tls&sni=example.com&fp=randomized&type=ws&host=example.com&path=%22F%3Fed%3D2048#example.com')">
+    <i class="fa fa-clipboard"></i> Copy วเลสMain
+</button>
+---------------------------------------------------------------
+v2ray with bestip
+---------------------------------------------------------------
+vless://example-uuid@best-ip:443?encryption=none&security=tls&sni=example.com&fp=randomized&type=ws&host=example.com&path=%22F%3Fed%3D2048#example.com
+<button onclick="copyToClipboard('vless://example-uuid@best-ip:443?encryption=none&security=tls&sni=example.com&fp=randomized&type=ws&host=example.com&path=%22F%3Fed%3D2048#example.com')">
+    <i class="fa fa-clipboard"></i> Copy วเลสSec
+</button>
+---------------------------------------------------------------
+                </pre>
+            `;
+        }
+        
+        // Call the function when the page loads
+        window.onload = populateConfig;
+    </script>
+</body>
+</html>
 
 const เซ็ตพอร์ตHttp = new Set([80, 8080, 8880, 2052, 2086, 2095, 2082]);
 const เซ็ตพอร์ตHttps = new Set([443, 8443, 2053, 2096, 2087, 2083]);
