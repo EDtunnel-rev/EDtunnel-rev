@@ -1,19 +1,5 @@
 # EDtunnel-rev
 
-## 分支说明
-
-| 分支名称          | 描述                                                        |
-| ----------------- | ----------------------------------------------------------- |
-| remote-socks5     | 实现远程SOCKS5代理池的功能开发                               |
-| socks5            | 实现SOCKS5代理IP的功能开发                                  |
-| vless             | 实现出站VLESS协议的功能开发                                  |
-| vless2            | 实现另一种出站VLESS协议的替代开发                            |
-| code1             | 为code1功能开发的分支                                        |
-| code2             | 为code2替代功能开发的分支                                    |
-| dns               | 开发与DNS替代相关的功能                                      |
-| main              | 项目的主分支                                                |
-| pages             | 针对Cloudflare Pages的部署版本开发                           |
-
 ## 部署在Cloudflare Pages
 
 1. 观看YouTube视频教程：
