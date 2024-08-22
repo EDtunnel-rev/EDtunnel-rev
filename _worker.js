@@ -699,7 +699,7 @@ const ed = 'RUR0dW5uZWw=';
  * @returns {string}
  */
 function getวเลสConfig(userIDs, hostName) {
-	const commonUrlPart = `:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%2Freyre-sg#${hostName}`;
+	const commonUrlPart = `:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%22F%3Fed%3D2048#${hostName}`;
 	const hashSeparator = "################################################################";
 
 	// Split the userIDs into an array
@@ -727,10 +727,10 @@ ${วเลสSec}
 	const header = `
 <p align='center'><img src='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' alt='图片描述' style='margin-bottom: -50px;'>
 <b style='font-size: 15px;'>Welcome! This function generates configuration for วเลส protocol. If you found this useful, please check our GitHub project for more:</b>
-<b style='font-size: 15px;'>欢迎！这是生成 วเลส 协议的配置。如果您发现这个项目很好用，请查看我们的 GitHub 项目给我一个star：</b>
-<a href='https://github.com/3Kmfi6HP/EDtunnel' target='_blank'>EDtunnel - https://github.com/3Kmfi6HP/EDtunnel</a>
+<b style='font-size: 15px;'>欢迎！这是生成vless协议的配置。如果您发现这个项目很好用，请查看我们的 GitHub 项目给我一个star：</b>
+<a href='https://github.com/3Kmfi6HP/EDtunnel' target='_blank'>EDtunnel-rev - https://github.com/EDtunnel-rev/EDtunnel-rev</a>
 <iframe src='https://ghbtns.com/github-btn.html?user=USERNAME&repo=REPOSITORY&type=star&count=true&size=large' frameborder='0' scrolling='0' width='170' height='30' title='GitHub'></iframe>
-<a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>วเลส 节点订阅连接</a>
+<a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>vless节点订阅连接</a>
 <a href='clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}}' target='_blank'>Clash for Windows 节点订阅连接</a>
 <a href='${clash_link}' target='_blank'>Clash 节点订阅连接</a>
 <a href='${subbestip}' target='_blank'>优选IP自动节点订阅</a>
@@ -743,17 +743,17 @@ ${วเลสSec}
 	const htmlHead = `
   <head>
 	<title>EDtunnel: วเลส configuration</title>
-	<meta name='description' content='This is a tool for generating วเลส protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!'>
+	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!'>
 	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta property='og:site_name' content='EDtunnel: วเลส configuration' />
+	<meta property='og:site_name' content='EDtunnel: vless configuration' />
 	<meta property='og:type' content='website' />
-	<meta property='og:title' content='EDtunnel - วเลส configuration and subscribe output' />
+	<meta property='og:title' content='EDtunnel-rev - vless configuration and subscribe output' />
 	<meta property='og:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
 	<meta property='og:url' content='https://${hostName}/' />
 	<meta property='og:image' content='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}' />
 	<meta name='twitter:card' content='summary_large_image' />
-	<meta name='twitter:title' content='EDtunnel - วเลส configuration and subscribe output' />
+	<meta name='twitter:title' content='EDtunnel - vless configuration and subscribe output' />
 	<meta name='twitter:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
 	<meta name='twitter:url' content='https://${hostName}/' />
 	<meta name='twitter:image' content='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' />
