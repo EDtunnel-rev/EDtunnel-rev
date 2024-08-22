@@ -713,13 +713,33 @@ function getวเลสConfig(userIDs, hostName) {
 }
 
 /**
+ * Generates vless configuration for given user IDs and hostname
+ * @param {string} userIDs - Single or comma separated userIDs
+ * @param {string} hostName - Hostname for the configuration
+ * @returns {string} HTML string containing the configuration
+ */
+function getวเลสConfig(userIDs, hostName) {
+    const commonUrlPart = `:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%22F%3Fed%3D2048#${hostName}`;
+    const hashSeparator = "################################################################";
+
+    const userIDArray = userIDs.split(",");
+    const configOutputs = userIDArray.map(userID => generateConfigForUser(userID, hostName, commonUrlPart, hashSeparator));
+    const sublink = `https://${hostName}/sub/${userIDArray[0]}?format=clash`;
+    const subbestip = `https://${hostName}/bestip/${userIDArray[0]}`;
+    const clash_link = `https://api.v1.mk/sub?target=clash&url=${encodeURIComponent(sublink)}&insert=false&emoji=true&list=false&tfo=false&scv=true&fdn=false&sort=false&new_name=true`;
+
+    return generateHtmlOutput(configOutputs.join('\n'), hostName, userIDArray, sublink, subbestip, clash_link);
+}
+
+/**
  * Generates configuration for a single user
  * @param {string} userID - User ID
  * @param {string} hostName - Hostname
  * @param {string} commonUrlPart - Common URL part
+ * @param {string} hashSeparator - Separator string
  * @returns {string} Configuration string for the user
  */
-function generateConfigForUser(userID, hostName, commonUrlPart) {
+function generateConfigForUser(userID, hostName, commonUrlPart, hashSeparator) {
     const วเลสMain = `${atob(pt)}://${userID}${atob(at)}${hostName}${commonUrlPart}`;
     const วเลสSec = `${atob(pt)}://${userID}${atob(at)}${พร็อกซีไอพี}${commonUrlPart}`;
 
@@ -734,6 +754,8 @@ ${วเลสSec}
 <button onclick='copyToClipboard("${วเลสSec}")'><i class="fa fa-clipboard"></i> Copy วเลสSec</button>
 ---------------------------------------------------------------`;
 }
+
+// The rest of the code remains the same
 
 /**
  * Generates the complete HTML output
