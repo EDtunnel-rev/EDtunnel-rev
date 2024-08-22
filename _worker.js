@@ -726,10 +726,10 @@ ${วเลสSec}
 	// Prepare header string
 	const header = `
 <p align='center'><img src='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' alt='图片描述' style='margin-bottom: -50px;'>
-<b style='font-size: 15px;'>Welcome! This function generates configuration for วเลส protocol. If you found this useful, please check our GitHub project for more:</b>
+<b style='font-size: 15px;'>Welcome! This function generates configuration for vless protocol. If you found this useful, please check our GitHub project for more:</b>
 <b style='font-size: 15px;'>欢迎！这是生成vless协议的配置。如果您发现这个项目很好用，请查看我们的 GitHub 项目给我一个star：</b>
-<a href='https://github.com/3Kmfi6HP/EDtunnel' target='_blank'>EDtunnel-rev - https://github.com/EDtunnel-rev/EDtunnel-rev</a>
-<iframe src='https://ghbtns.com/github-btn.html?user=USERNAME&repo=REPOSITORY&type=star&count=true&size=large' frameborder='0' scrolling='0' width='170' height='30' title='GitHub'></iframe>
+<a href='https://github.com/EDtunnel-rev/EDtunnel-rev' target='_blank'>EDtunnel-rev - https://github.com/EDtunnel-rev/EDtunnel-rev</a>
+<iframe src='https://ghbtns.com/github-btn.html?user=EDtunnel-rev&repo=EDrunnel-rev&type=star&count=true&size=large' frameborder='0' scrolling='0' width='170' height='30' title='GitHub'></iframe>
 <a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>vless节点订阅连接</a>
 <a href='clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}}' target='_blank'>Clash for Windows 节点订阅连接</a>
 <a href='${clash_link}' target='_blank'>Clash 节点订阅连接</a>
