@@ -692,24 +692,36 @@ async function handleUDPOutBound(webSocket, วเลสResponseHeader, log) {
 const at = 'QA==';
 const pt = 'dmxlc3M=';
 const ed = 'RUR0dW5uZWw=';
+
 /**
- *
- * @param {string} userID - single or comma separated userIDs
- * @param {string | null} hostName
- * @returns {string}
+ * Generates vless configuration for given user IDs and hostname
+ * @param {string} userIDs - Single or comma separated userIDs
+ * @param {string | null} hostName - Hostname for the configuration
+ * @returns {string} HTML string containing the configuration
  */
 function getวเลสConfig(userIDs, hostName) {
-	const commonUrlPart = `:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%22F%3Fed%3D2048#${hostName}`;
-	const hashSeparator = "################################################################";
+    const commonUrlPart = `:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%22F%3Fed%3D2048#${hostName}`;
+    const hashSeparator = "################################################################";
 
-	// Split the userIDs into an array
-	const userIDArray = userIDs.split(",");
+    const userIDArray = userIDs.split(",");
+    const configOutputs = userIDArray.map(generateConfigForUser);
+    const sublink = `https://${hostName}/sub/${userIDArray[0]}?format=clash`;
+    const subbestip = `https://${hostName}/bestip/${userIDArray[0]}`;
+    const clash_link = `https://api.v1.mk/sub?target=clash&url=${encodeURIComponent(sublink)}&insert=false&emoji=true&list=false&tfo=false&scv=true&fdn=false&sort=false&new_name=true`;
 
-	// Prepare output string for each userID
-	const output = userIDArray.map((userID) => {
-		const วเลสMain = atob(pt) + '://' + userID + atob(at) + hostName + commonUrlPart;
-		const วเลสSec = atob(pt) + '://' + userID + atob(at) + พร็อกซีไอพี + commonUrlPart;
-		return `<h2>UUID: ${userID}</h2>${hashSeparator}\nv2ray default ip
+    return generateHtmlOutput(configOutputs.join('\n'), hostName, userIDArray, sublink, subbestip, clash_link);
+}
+
+/**
+ * Generates configuration for a single user
+ * @param {string} userID - User ID
+ * @returns {string} Configuration string for the user
+ */
+function generateConfigForUser(userID) {
+    const วเลสMain = `${atob(pt)}://${userID}${atob(at)}${hostName}${commonUrlPart}`;
+    const วเลสSec = `${atob(pt)}://${userID}${atob(at)}${พร็อกซีไอพี}${commonUrlPart}`;
+
+    return `<h2>UUID: ${userID}</h2>${hashSeparator}\nv2ray default ip
 ---------------------------------------------------------------
 ${วเลสMain}
 <button onclick='copyToClipboard("${วเลสMain}")'><i class="fa fa-clipboard"></i> Copy วเลสMain</button>
@@ -719,226 +731,348 @@ v2ray with bestip
 ${วเลสSec}
 <button onclick='copyToClipboard("${วเลสSec}")'><i class="fa fa-clipboard"></i> Copy วเลสSec</button>
 ---------------------------------------------------------------`;
-	}).join('\n');
-	const sublink = `https://${hostName}/sub/${userIDArray[0]}?format=clash`
-	const subbestip = `https://${hostName}/bestip/${userIDArray[0]}`;
-	const clash_link = `https://api.v1.mk/sub?target=clash&url=${encodeURIComponent(sublink)}&insert=false&emoji=true&list=false&tfo=false&scv=true&fdn=false&sort=false&new_name=true`;
-	// Prepare header string
-	const header = `
-<p align='center'><img src='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' alt='图片描述' style='margin-bottom: -50px;'>
-<b style='font-size: 15px;'>Welcome! This function generates configuration for vless protocol. If you found this useful, please check our GitHub project for more:</b>
-<b style='font-size: 15px;'>欢迎！这是生成vless协议的配置。如果您发现这个项目很好用，请查看我们的 GitHub 项目给我一个star：</b>
-<a href='https://github.com/EDtunnel-rev/EDtunnel-rev' target='_blank'>EDtunnel-rev - https://github.com/EDtunnel-rev/EDtunnel-rev</a>
-<iframe src='https://ghbtns.com/github-btn.html?user=EDtunnel-rev&repo=EDtunnel-rev&type=star&count=true&size=large' frameborder='0' scrolling='0' width='170' height='30' title='GitHub'></iframe>
-<a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>vless节点订阅连接</a>
-<a href='clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}}' target='_blank'>Clash for Windows 节点订阅连接</a>
-<a href='${clash_link}' target='_blank'>Clash 节点订阅连接</a>
-<a href='${subbestip}' target='_blank'>优选IP自动节点订阅</a>
-<a href='clash://install-config?url=${encodeURIComponent(subbestip)}' target='_blank'>Clash优选IP自动</a>
-<a href='sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}' target='_blank'>singbox优选IP自动</a>
-<a href='sn://subscription?url=${encodeURIComponent(subbestip)}' target='_blank'>nekobox优选IP自动</a>
-<a href='v2rayng://install-config?url=${encodeURIComponent(subbestip)}' target='_blank'>v2rayNG优选IP自动</a></p>`;
+}
 
-	// HTML Head with CSS and FontAwesome library
-	const htmlHead = `
-  <head>
-	<title>EDtunnel: วเลส configuration</title>
-	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!'>
-	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta property='og:site_name' content='EDtunnel: vless configuration' />
-	<meta property='og:type' content='website' />
-	<meta property='og:title' content='EDtunnel-rev - vless configuration and subscribe output' />
-	<meta property='og:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
-	<meta property='og:url' content='https://${hostName}/' />
-	<meta property='og:image' content='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}' />
-	<meta name='twitter:card' content='summary_large_image' />
-	<meta name='twitter:title' content='EDtunnel - vless configuration and subscribe output' />
-	<meta name='twitter:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
-	<meta name='twitter:url' content='https://${hostName}/' />
-	<meta name='twitter:image' content='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' />
-	<meta property='og:image:width' content='1500' />
-	<meta property='og:image:height' content='1500' />
+/**
+ * Generates the complete HTML output
+ * @param {string} configContent - Generated configuration content
+ * @param {string} hostName - Hostname
+ * @param {string[]} userIDArray - Array of user IDs
+ * @param {string} sublink - Subscription link
+ * @param {string} subbestip - Best IP subscription link
+ * @param {string} clash_link - Clash subscription link
+ * @returns {string} Complete HTML output
+ */
+function generateHtmlOutput(configContent, hostName, userIDArray, sublink, subbestip, clash_link) {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDtunnel: วเลส configuration</title>
+    <meta name="description" content="This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!">
+    <meta name="keywords" content="EDtunnel, cloudflare pages, cloudflare worker, severless">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:site_name" content="EDtunnel: vless configuration" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EDtunnel-rev - vless configuration and subscribe output" />
+    <meta property="og:description" content="Use cloudflare pages and worker severless to implement วเลส protocol" />
+    <meta property="og:url" content="https://${hostName}/" />
+    <meta property="og:image" content="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDArray[0]}@${hostName}${commonUrlPart}`)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EDtunnel - vless configuration and subscribe output" />
+    <meta name="twitter:description" content="Use cloudflare pages and worker severless to implement วเลส protocol" />
+    <meta name="twitter:url" content="https://${hostName}/" />
+    <meta name="twitter:image" content="https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky" />
+    <meta property="og:image:width" content="1500" />
+    <meta property="og:image:height" content="1500" />
 
-	<style>
-	body {
-	  font-family: Arial, sans-serif;
-	  background-color: #f0f0f0;
-	  color: #333;
-	  padding: 10px;
-	}
-
-	a {
-	  color: #1a0dab;
-	  text-decoration: none;
-	}
-	img {
-	  max-width: 100%;
-	  height: auto;
-	}
-
-	pre {
-	  white-space: pre-wrap;
-	  word-wrap: break-word;
-	  background-color: #fff;
-	  border: 1px solid #ddd;
-	  padding: 15px;
-	  margin: 10px 0;
-	}
-	/* Dark mode */
-	@media (prefers-color-scheme: dark) {
-	  body {
-		background-color: #333;
-		color: #f0f0f0;
-	  }
-
-	  a {
-		color: #9db4ff;
-	  }
-
-	  pre {
-		background-color: #282a36;
-		border-color: #6272a4;
-	  }
-	}
-	</style>
-
-	<!-- Add FontAwesome library -->
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-  </head>
-  `;
-
-	// Join output with newlines, wrap inside <html> and <body>
-	return `
-  <html>
-  ${htmlHead}
-  <body>
-  <pre style='background-color: transparent; border: none;'>${header}</pre>
-  <pre>${output}</pre>
-  </body>
-  <script>
-	function copyToClipboard(text) {
-	  navigator.clipboard.writeText(text)
-		.then(() => {
-		  alert("Copied to clipboard");
-		})
-		.catch((err) => {
-		  console.error("Failed to copy to clipboard:", err);
-		});
-	}
-  </script>
-  </html>`;
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f3f6;
+            --text-color: #333;
+            --card-background: #fff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #3498db;
+                --secondary-color: #2ecc71;
+                --background-color: #1a1a1a;
+                --text-color: #f0f0f0;
+                --card-background: #2c2c2c;
+                --card-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+            }
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        pre {
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #27ae60;
+        }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .links a:hover {
+            background-color: #2980b9;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card pulse">
+            <img src="https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky" alt="EDtunnel Logo" style="display: block; margin: 0 auto;">
+            <h1 style="text-align: center;">EDtunnel: วเลส Configuration</h1>
+            <p style="text-align: center;">Welcome! This function generates configuration for vless protocol. If you found this useful, please check our GitHub project:</p>
+            <div style="text-align: center;">
+                <a href="https://github.com/EDtunnel-rev/EDtunnel-rev" target="_blank" class="github-button">
+                    <i class="fab fa-github"></i> EDtunnel-rev
+                </a>
+                <iframe src="https://ghbtns.com/github-btn.html?user=EDtunnel-rev&repo=EDtunnel-rev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle;"></iframe>
+            </div>
+        </div>
+        
+        <div class="card">
+            <pre>${configContent}</pre>
+        </div>
+        
+        <div class="card">
+            <h2>Useful Links</h2>
+            <div class="links">
+                <a href="//${hostName}/sub/${userIDArray[0]}" target="_blank">
+                    <i class="fas fa-list"></i> vless节点订阅连接
+                </a>
+                <a href="clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}" target="_blank">
+                    <i class="fas fa-window-restore"></i> Clash for Windows 节点订阅连接
+                </a>
+                <a href="${clash_link}" target="_blank">
+                    <i class="fas fa-link"></i> Clash 节点订阅连接
+                </a>
+                <a href="${subbestip}" target="_blank">
+                    <i class="fas fa-trophy"></i> 优选IP自动节点订阅
+                </a>
+                <a href="clash://install-config?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-bolt"></i> Clash优选IP自动
+                </a>
+                <a href="sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-box"></i> singbox优选IP自动
+                </a>
+                <a href="sn://subscription?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-cat"></i> nekobox优选IP自动
+                </a>
+                <a href="v2rayng://install-config?url=${encodeURIComponent(subbestip)}" target="_blank">
+                    <i class="fas fa-v"></i> v2rayNG优选IP自动
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert("Copied to clipboard");
+                })
+                .catch((err) => {
+                    console.error("Failed to copy to clipboard:", err);
+                });
+        }
+    </script>
+</body>
+</html>
+    `;
 }
 
 const เซ็ตพอร์ตHttp = new Set([80, 8080, 8880, 2052, 2086, 2095, 2082]);
 const เซ็ตพอร์ตHttps = new Set([443, 8443, 2053, 2096, 2087, 2083]);
 
+/**
+ * Generates vless subscription configuration
+ * @param {string} ไอดีผู้ใช้_เส้นทาง - User ID or path
+ * @param {string} ชื่อโฮสต์ - Hostname
+ * @returns {string} Subscription configuration
+ */
 function สร้างวเลสSub(ไอดีผู้ใช้_เส้นทาง, ชื่อโฮสต์) {
-	const อาร์เรย์ไอดีผู้ใช้ = ไอดีผู้ใช้_เส้นทาง.includes(',') ? ไอดีผู้ใช้_เส้นทาง.split(',') : [ไอดีผู้ใช้_เส้นทาง];
-	const ส่วนUrlทั่วไปHttp = `?encryption=none&security=none&fp=random&type=ws&host=${ชื่อโฮสต์}&path=%2F%3Fed%3D2048#`;
-	const ส่วนUrlทั่วไปHttps = `?encryption=none&security=tls&sni=${ชื่อโฮสต์}&fp=random&type=ws&host=${ชื่อโฮสต์}&path=%2F%3Fed%3D2048#`;
+    const อาร์เรย์ไอดีผู้ใช้ = ไอดีผู้ใช้_เส้นทาง.includes(',') ? ไอดีผู้ใช้_เส้นทาง.split(',') : [ไอดีผู้ใช้_เส้นทาง];
+    const ส่วนUrlทั่วไปHttp = `?encryption=none&security=none&fp=random&type=ws&host=${ชื่อโฮสต์}&path=%2F%3Fed%3D2048#`;
+    const ส่วนUrlทั่วไปHttps = `?encryption=none&security=tls&sni=${ชื่อโฮสต์}&fp=random&type=ws&host=${ชื่อโฮสต์}&path=%2F%3Ed%3D2048#`;
 
-	const ผลลัพธ์ = อาร์เรย์ไอดีผู้ใช้.flatMap((ไอดีผู้ใช้) => {
-		const การกำหนดค่าHttp = Array.from(เซ็ตพอร์ตHttp).flatMap((พอร์ต) => {
-			if (!ชื่อโฮสต์.includes('pages.dev')) {
-				const ส่วนUrl = `${ชื่อโฮสต์}-HTTP-${พอร์ต}`;
-				const วเลสหลักHttp = atob(pt) + '://' + ไอดีผู้ใช้ + atob(at) + ชื่อโฮสต์ + ':' + พอร์ต + ส่วนUrlทั่วไปHttp + ส่วนUrl;
-				return พร็อกซีไอพีs.flatMap((พร็อกซีไอพี) => {
-					const วเลสรองHttp = atob(pt) + '://' + ไอดีผู้ใช้ + atob(at) + พร็อกซีไอพี + ':' + พอร์ต + ส่วนUrlทั่วไปHttp + ส่วนUrl + '-' + พร็อกซีไอพี + '-' + atob(ed);
-					return [วเลสหลักHttp, วเลสรองHttp];
-				});
-			}
-			return [];
-		});
+    const ผลลัพธ์ = อาร์เรย์ไอดีผู้ใช้.flatMap((ไอดีผู้ใช้) => {
+        const การกำหนดค่าHttp = Array.from(เซ็ตพอร์ตHttp).flatMap((พอร์ต) => {
+            if (!ชื่อโฮสต์.includes('pages.dev')) {
+                const ส่วนUrl = `${ชื่อโฮสต์}-HTTP-${พอร์ต}`;
+                const วเลสหลักHttp = `${atob(pt)}://${ไอดีผู้ใช้}${atob(at)}${ชื่อโฮสต์}:${พอร์ต}${ส่วนUrlทั่วไปHttp}${ส่วนUrl}`;
+                return พร็อกซีไอพีs.flatMap((พร็อกซีไอพี) => {
+                    const วเลสรองHttp = `${atob(pt)}://${ไอดีผู้ใช้}${atob(at)}${พร็อกซีไอพี}:${พอร์ต}${ส่วนUrlทั่วไปHttp}${ส่วนUrl}-${พร็อกซีไอพี}-${atob(ed)}`;
+                    return [วเลสหลักHttp, วเลสรองHttp];
+                });
+            }
+            return [];
+        });
 
-		const การกำหนดค่าHttps = Array.from(เซ็ตพอร์ตHttps).flatMap((พอร์ต) => {
-			const ส่วนUrl = `${ชื่อโฮสต์}-HTTPS-${พอร์ต}`;
-			const วเลสหลักHttps = atob(pt) + '://' + ไอดีผู้ใช้ + atob(at) + ชื่อโฮสต์ + ':' + พอร์ต + ส่วนUrlทั่วไปHttps + ส่วนUrl;
-			return พร็อกซีไอพีs.flatMap((พร็อกซีไอพี) => {
-				const วเลสรองHttps = atob(pt) + '://' + ไอดีผู้ใช้ + atob(at) + พร็อกซีไอพี + ':' + พอร์ต + ส่วนUrlทั่วไปHttps + ส่วนUrl + '-' + พร็อกซีไอพี + '-' + atob(ed);
-				return [วเลสหลักHttps, วเลสรองHttps];
-			});
-		});
+        const การกำหนดค่าHttps = Array.from(เซ็ตพอร์ตHttps).flatMap((พอร์ต) => {
+            const ส่วนUrl = `${ชื่อโฮสต์}-HTTPS-${พอร์ต}`;
+            const วเลสหลักHttps = `${atob(pt)}://${ไอดีผู้ใช้}${atob(at)}${ชื่อโฮสต์}:${พอร์ต}${ส่วนUrlทั่วไปHttps}${ส่วนUrl}`;
+            return พร็อกซีไอพีs.flatMap((พร็อกซีไอพี) => {
+                const วเลสรองHttps = `${atob(pt)}://${ไอดีผู้ใช้}${atob(at)}${พร็อกซีไอพี}:${พอร์ต}${ส่วนUrlทั่วไปHttps}${ส่วนUrl}-${พร็อกซีไอพี}-${atob(ed)}`;
+                return [วเลสหลักHttps, วเลสรองHttps];
+            });
+        });
 
-		return [...การกำหนดค่าHttp, ...การกำหนดค่าHttps];
-	});
+        return [...การกำหนดค่าHttp, ...การกำหนดค่าHttps];
+    });
 
-	return ผลลัพธ์.join('\n');
+    return ผลลัพธ์.join('\n');
 }
 
 const cn_hostnames = [
-	'weibo.com',                // Weibo - A popular social media platform
-	'www.baidu.com',            // Baidu - The largest search engine in China
-	'www.qq.com',               // QQ - A widely used instant messaging platform
-	'www.taobao.com',           // Taobao - An e-commerce website owned by Alibaba Group
-	'www.jd.com',               // JD.com - One of the largest online retailers in China
-	'www.sina.com.cn',          // Sina - A Chinese online media company
-	'www.sohu.com',             // Sohu - A Chinese internet service provider
-	'www.tmall.com',            // Tmall - An online retail platform owned by Alibaba Group
-	'www.163.com',              // NetEase Mail - One of the major email providers in China
-	'www.zhihu.com',            // Zhihu - A popular question-and-answer website
-	'www.youku.com',            // Youku - A Chinese video sharing platform
-	'www.xinhuanet.com',        // Xinhua News Agency - Official news agency of China
-	'www.douban.com',           // Douban - A Chinese social networking service
-	'www.meituan.com',          // Meituan - A Chinese group buying website for local services
-	'www.toutiao.com',          // Toutiao - A news and information content platform
-	'www.ifeng.com',            // iFeng - A popular news website in China
-	'www.autohome.com.cn',      // Autohome - A leading Chinese automobile online platform
-	'www.360.cn',               // 360 - A Chinese internet security company
-	'www.douyin.com',           // Douyin - A Chinese short video platform
-	'www.kuaidi100.com',        // Kuaidi100 - A Chinese express delivery tracking service
-	'www.wechat.com',           // WeChat - A popular messaging and social media app
-	'www.csdn.net',             // CSDN - A Chinese technology community website
-	'www.imgo.tv',              // ImgoTV - A Chinese live streaming platform
-	'www.aliyun.com',           // Alibaba Cloud - A Chinese cloud computing company
-	'www.eyny.com',             // Eyny - A Chinese multimedia resource-sharing website
-	'www.mgtv.com',             // MGTV - A Chinese online video platform
-	'www.xunlei.com',           // Xunlei - A Chinese download manager and torrent client
-	'www.hao123.com',           // Hao123 - A Chinese web directory service
-	'www.bilibili.com',         // Bilibili - A Chinese video sharing and streaming platform
-	'www.youth.cn',             // Youth.cn - A China Youth Daily news portal
-	'www.hupu.com',             // Hupu - A Chinese sports community and forum
-	'www.youzu.com',            // Youzu Interactive - A Chinese game developer and publisher
-	'www.panda.tv',             // Panda TV - A Chinese live streaming platform
-	'www.tudou.com',            // Tudou - A Chinese video-sharing website
-	'www.zol.com.cn',           // ZOL - A Chinese electronics and gadgets website
-	'www.toutiao.io',           // Toutiao - A news and information app
-	'www.tiktok.com',           // TikTok - A Chinese short-form video app
-	'www.netease.com',          // NetEase - A Chinese internet technology company
-	'www.cnki.net',             // CNKI - China National Knowledge Infrastructure, an information aggregator
-	'www.zhibo8.cc',            // Zhibo8 - A website providing live sports streams
-	'www.zhangzishi.cc',        // Zhangzishi - Personal website of Zhang Zishi, a public intellectual in China
-	'www.xueqiu.com',           // Xueqiu - A Chinese online social platform for investors and traders
-	'www.qqgongyi.com',         // QQ Gongyi - Tencent's charitable foundation platform
-	'www.ximalaya.com',         // Ximalaya - A Chinese online audio platform
-	'www.dianping.com',         // Dianping - A Chinese online platform for finding and reviewing local businesses
-	'www.suning.com',           // Suning - A leading Chinese online retailer
-	'www.zhaopin.com',          // Zhaopin - A Chinese job recruitment platform
-	'www.jianshu.com',          // Jianshu - A Chinese online writing platform
-	'www.mafengwo.cn',          // Mafengwo - A Chinese travel information sharing platform
-	'www.51cto.com',            // 51CTO - A Chinese IT technical community website
-	'www.qidian.com',           // Qidian - A Chinese web novel platform
-	'www.ctrip.com',            // Ctrip - A Chinese travel services provider
-	'www.pconline.com.cn',      // PConline - A Chinese technology news and review website
-	'www.cnzz.com',             // CNZZ - A Chinese web analytics service provider
-	'www.telegraph.co.uk',      // The Telegraph - A British newspaper website	
-	'www.ynet.com',             // Ynet - A Chinese news portal
-	'www.ted.com',              // TED - A platform for ideas worth spreading
-	'www.renren.com',           // Renren - A Chinese social networking service
-	'www.pptv.com',             // PPTV - A Chinese online video streaming platform
-	'www.liepin.com',           // Liepin - A Chinese online recruitment website
-	'www.881903.com',           // 881903 - A Hong Kong radio station website
-	'www.aipai.com',            // Aipai - A Chinese online video sharing platform
-	'www.ttpaihang.com',        // Ttpaihang - A Chinese celebrity popularity ranking website
-	'www.quyaoya.com',          // Quyaoya - A Chinese online ticketing platform
-	'www.91.com',               // 91.com - A Chinese software download website
-	'www.dianyou.cn',           // Dianyou - A Chinese game information website
-	'www.tmtpost.com',          // TMTPost - A Chinese technology media platform
-	'www.douban.com',           // Douban - A Chinese social networking service
-	'www.guancha.cn',           // Guancha - A Chinese news and commentary website
-	'www.so.com',               // So.com - A Chinese search engine
-	'www.58.com',               // 58.com - A Chinese classified advertising website
-	'www.cnblogs.com',          // Cnblogs - A Chinese technology blog community
-	'www.cntv.cn',              // CCTV - China Central Television official website
-	'www.secoo.com',            // Secoo - A Chinese luxury e-commerce platform
+    'weibo.com',                // Weibo - A popular social media platform
+    'www.baidu.com',            // Baidu - The largest search engine in China
+    'www.qq.com',               // QQ - A widely used instant messaging platform
+    'www.taobao.com',           // Taobao - An e-commerce website owned by Alibaba Group
+    'www.jd.com',               // JD.com - One of the largest online retailers in China
+    'www.sina.com.cn',          // Sina - A Chinese online media company
+    'www.sohu.com',             // Sohu - A Chinese internet service provider
+    'www.tmall.com',            // Tmall - An online retail platform owned by Alibaba Group
+    'www.163.com',              // NetEase Mail - One of the major email providers in China
+    'www.zhihu.com',            // Zhihu - A popular question-and-answer website
+    'www.youku.com',            // Youku - A Chinese video sharing platform
+    'www.xinhuanet.com',        // Xinhua News Agency - Official news agency of China
+    'www.douban.com',           // Douban - A Chinese social networking service
+    'www.meituan.com',          // Meituan - A Chinese group buying website for local services
+    'www.toutiao.com',          // Toutiao - A news and information content platform
+    'www.ifeng.com',            // iFeng - A popular news website in China
+    'www.autohome.com.cn',      // Autohome - A leading Chinese automobile online platform
+    'www.360.cn',               // 360 - A Chinese internet security company
+    'www.douyin.com',           // Douyin - A Chinese short video platform
+    'www.kuaidi100.com',        // Kuaidi100 - A Chinese express delivery tracking service
+    'www.wechat.com',           // WeChat - A popular messaging and social media app
+    'www.csdn.net',             // CSDN - A Chinese technology community website
+    'www.imgo.tv',              // ImgoTV - A Chinese live streaming platform
+    'www.aliyun.com',           // Alibaba Cloud - A Chinese cloud computing company
+    'www.eyny.com',             // Eyny - A Chinese multimedia resource-sharing website
+    'www.mgtv.com',             // MGTV - A Chinese online video platform
+    'www.xunlei.com',           // Xunlei - A Chinese download manager and torrent client
+    'www.hao123.com',           // Hao123 - A Chinese web directory service
+    'www.bilibili.com',         // Bilibili - A Chinese video sharing and streaming platform
+    'www.youth.cn',             // Youth.cn - A China Youth Daily news portal
+    'www.hupu.com',             // Hupu - A Chinese sports community and forum
+    'www.youzu.com',            // Youzu Interactive - A Chinese game developer and publisher
+    'www.panda.tv',             // Panda TV - A Chinese live streaming platform
+    'www.tudou.com',            // Tudou - A Chinese video-sharing website
+    'www.zol.com.cn',           // ZOL - A Chinese electronics and gadgets website
+    'www.toutiao.io',           // Toutiao - A news and information app
+    'www.tiktok.com',           // TikTok - A Chinese short-form video app
+    'www.netease.com',          // NetEase - A Chinese internet technology company
+    'www.cnki.net',             // CNKI - China National Knowledge Infrastructure, an information aggregator
+    'www.zhibo8.cc',            // Zhibo8 - A website providing live sports streams
+    'www.zhangzishi.cc',        // Zhangzishi - Personal website of Zhang Zishi, a public intellectual in China
+    'www.xueqiu.com',           // Xueqiu - A Chinese online social platform for investors and traders
+    'www.qqgongyi.com',         // QQ Gongyi - Tencent's charitable foundation platform
+    'www.ximalaya.com',         // Ximalaya - A Chinese online audio platform
+    'www.dianping.com',         // Dianping - A Chinese online platform for finding and reviewing local businesses
+    'www.suning.com',           // Suning - A leading Chinese online retailer
+    'www.zhaopin.com',          // Zhaopin - A Chinese job recruitment platform
+    'www.jianshu.com',          // Jianshu - A Chinese online writing platform
+    'www.mafengwo.cn',          // Mafengwo - A Chinese travel information sharing platform
+    'www.51cto.com',            // 51CTO - A Chinese IT technical community website
+    'www.qidian.com',           // Qidian - A Chinese web novel platform
+    'www.ctrip.com',            // Ctrip - A Chinese travel services provider
+    'www.pconline.com.cn',      // PConline - A Chinese technology news and review website
+    'www.cnzz.com',             // CNZZ - A Chinese web analytics service provider
+    'www.telegraph.co.uk',      // The Telegraph - A British newspaper website
+    'www.ynet.com',             // Ynet - A Chinese news portal
+    'www.ted.com',              // TED - A platform for ideas worth spreading
+    'www.renren.com',           // Renren - A Chinese social networking service
+    'www.pptv.com',             // PPTV - A Chinese online video streaming platform
+    'www.liepin.com',           // Liepin - A Chinese online recruitment website
+    'www.881903.com',           // 881903 - A Hong Kong radio station website
+    'www.aipai.com',            // Aipai - A Chinese online video sharing platform
+    'www.ttpaihang.com',        // Ttpaihang - A Chinese celebrity popularity ranking website
+    'www.quyaoya.com',          // Quyaoya - A Chinese online ticketing platform
+    'www.91.com',               // 91.com - A Chinese software download website
+    'www.dianyou.cn',           // Dianyou - A Chinese game information website
+    'www.tmtpost.com',          // TMTPost - A Chinese technology media platform
+    'www.douban.com',           // Douban - A Chinese social networking service
+    'www.guancha.cn',           // Guancha - A Chinese news and commentary website
+    'www.so.com',               // So.com - A Chinese search engine
+    'www.58.com',               // 58.com - A Chinese classified advertising website
+    'www.cnblogs.com',          // Cnblogs - A Chinese technology blog community
+    'www.cntv.cn',              // CCTV - China Central Television official website
+    'www.secoo.com',            // Secoo - A Chinese luxury e-commerce platform
 ];
