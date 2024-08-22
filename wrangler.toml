@@ -5,10 +5,10 @@ name = "server-sg1" # todo
 main = "_worker.js"
 compatibility_date = "2023-05-26"
 [[routes]]
-pattern = "reyre.my.id"
+pattern = "reyre-wrt.biz.id"
 custom_domain = true
 [[routes]]
-pattern = "edge.skype.com.reyre.my.id"
+pattern = "edge.skype.com.reyre-wrt.biz.id"
 custom_domain = true
 
 [vars]
