@@ -741,65 +741,111 @@ ${วเลสSec}
 
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
-  <head>
-	<title>EDtunnel: vless configuration</title>
-	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/EDtunnel-rev/EDtunnel-rev if you found it useful!'>
-	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
+<head>
+	<title>EDtunnel: VLESS Configuration</title>
+	<meta name='description' content='This is a tool for generating VLESS protocol configurations. Give us a star on GitHub https://github.com/EDtunnel-rev/EDtunnel-rev if you found it useful!'>
+	<meta name='keywords' content='EDtunnel, Cloudflare Pages, Cloudflare Worker, Severless'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta property='og:site_name' content='EDtunnel: vless configuration' />
+	<meta property='og:site_name' content='EDtunnel: VLESS Configuration' />
 	<meta property='og:type' content='website' />
-	<meta property='og:title' content='EDtunnel-rev - vless configuration and subscribe output' />
-	<meta property='og:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
+	<meta property='og:title' content='EDtunnel-rev - VLESS Configuration and Subscribe Output' />
+	<meta property='og:description' content='Use Cloudflare Pages and Worker Severless to implement VLESS protocol' />
 	<meta property='og:url' content='https://${hostName}/' />
 	<meta property='og:image' content='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}' />
 	<meta name='twitter:card' content='summary_large_image' />
-	<meta name='twitter:title' content='EDtunnel - vless configuration and subscribe output' />
-	<meta name='twitter:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
+	<meta name='twitter:title' content='EDtunnel - VLESS Configuration and Subscribe Output' />
+	<meta name='twitter:description' content='Use Cloudflare Pages and Worker Severless to implement VLESS protocol' />
 	<meta name='twitter:url' content='https://${hostName}/' />
 	<meta name='twitter:image' content='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' />
 	<meta property='og:image:width' content='1500' />
 	<meta property='og:image:height' content='1500' />
 	<style>
 	body {
-	  font-family: Arial, sans-serif;
-	  background-color: #f0f0f0;
-	  color: #333;
-	  padding: 10px;
+	  font-family: 'Roboto', sans-serif;
+	  background-color: #0a0f1c;
+	  color: #e0e6f1;
+	  padding: 20px;
+	  margin: 0;
 	}
 	a {
-	  color: #1a0dab;
+	  color: #1abc9c;
 	  text-decoration: none;
+	  transition: color 0.3s;
+	}
+	a:hover {
+	  color: #16a085;
 	}
 	img {
 	  max-width: 100%;
 	  height: auto;
+	  border-radius: 8px;
+	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 	pre {
 	  white-space: pre-wrap;
 	  word-wrap: break-word;
-	  background-color: #fff;
-	  border: 1px solid #ddd;
-	  padding: 15px;
-	  margin: 10px 0;
+	  background-color: #1b2735;
+	  border: 1px solid #34495e;
+	  padding: 20px;
+	  margin: 20px 0;
+	  border-radius: 10px;
+	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	  color: #c8d6e5;
+	  font-size: 1rem;
 	}
 	/* Dark mode */
 	@media (prefers-color-scheme: dark) {
 	  body {
-		background-color: #333;
-		color: #f0f0f0;
+		background-color: #0a0f1c;
+		color: #e0e6f1;
 	  }
 	  a {
-		color: #9db4ff;
+		color: #1abc9c;
 	  }
 	  pre {
-		background-color: #282a36;
-		border-color: #6272a4;
+		background-color: #1b2735;
+		border-color: #34495e;
+		color: #c8d6e5;
 	  }
 	}
+	/* Adding neon glow effect */
+	h1, h2, h3, h4, h5, h6 {
+	  color: #1abc9c;
+	  text-shadow: 0 0 10px #1abc9c, 0 0 20px #1abc9c, 0 0 30px #1abc9c, 0 0 40px #1abc9c, 0 0 50px #1abc9c, 0 0 60px #1abc9c, 0 0 70px #1abc9c;
+	  font-family: 'Orbitron', sans-serif;
+	}
+	button {
+	  background-color: #1abc9c;
+	  color: #0a0f1c;
+	  border: none;
+	  padding: 10px 20px;
+	  font-size: 1rem;
+	  cursor: pointer;
+	  transition: background-color 0.3s, transform 0.3s;
+	  border-radius: 5px;
+	}
+	button:hover {
+	  background-color: #16a085;
+	  transform: translateY(-2px);
+	}
+	.container {
+	  max-width: 1200px;
+	  margin: 0 auto;
+	  padding: 20px;
+	  background: rgba(255, 255, 255, 0.05);
+	  border-radius: 10px;
+	  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	  backdrop-filter: blur(5px);
+	  -webkit-backdrop-filter: blur(5px);
+	  border: 1px solid rgba(255, 255, 255, 0.1);
+	}
 	</style>
+	<!-- Add Google Fonts -->
+	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500;700&display=swap' rel='stylesheet'>
 	<!-- Add FontAwesome library -->
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-  </head>
+</head>
+
   `;
 
 	// Join output with newlines, wrap inside <html> and <body>
