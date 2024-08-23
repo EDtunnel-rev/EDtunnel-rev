@@ -929,7 +929,7 @@ ${วเลสSec}
 		}
 	</style>
 	<!-- Add Google Fonts -->
-	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
 	<!-- Add FontAwesome library -->
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 	<script>
@@ -1024,12 +1024,15 @@ ${วเลสSec}
 			document.querySelector('#agreeButton').textContent = selectedLanguage.agree;
 		}
 	</script>
-</head>；
+</head>
+
+  `;
+
 	// Join output with newlines, wrap inside <html> and <body>
-return `
+	return `
   <html>
   ${htmlHead}
-<body>
+  <body>
 <body>
 	<!-- Modal -->
 	<div id="myModal" class="modal">
@@ -1050,15 +1053,6 @@ return `
 			<p>Please confirm your agreement to these terms by checking the box below and clicking "Agree".</p>
 			<label><input type="checkbox" id="agreementCheckbox"> I agree to the terms and conditions</label>
 			<button id="agreeButton" class="modal-button" disabled>Agree</button>
-
-			<!-- Language Switcher -->
-			<div class="language-switcher">
-				<button class="language-button" data-language="en">English</button>
-				<button class="language-button" data-language="zh">中文</button>
-				<button class="language-button" data-language="fr">Français</button>
-				<button class="language-button" data-language="ja">日本語</button>
-				<button class="language-button" data-language="ko">한국어</button>
-			</div>
 		</div>
 	</div>
 
@@ -1066,12 +1060,20 @@ return `
 		<h1>Welcome to EDtunnel: VLESS Configuration</h1>
 		<p>Generate your VLESS protocol configuration with ease and efficiency. This tool is powered by Cloudflare Pages and Worker Severless technology to deliver seamless performance.</p>
 		
-		<!-- Theme Switcher -->
+		<!-- Theme and Language Switcher -->
 		<div class="theme-switcher">
 			<button class="theme-button" data-theme="light">Light</button>
 			<button class="theme-button" data-theme="dark">Dark</button>
 			<button class="theme-button" data-theme="gold">Gold</button>
 			<button class="theme-button" data-theme="purple">Purple</button>
+		</div>
+
+		<div class="language-switcher">
+			<button class="language-button" data-language="en">English</button>
+			<button class="language-button" data-language="zh">中文</button>
+			<button class="language-button" data-language="fr">Français</button>
+			<button class="language-button" data-language="ja">日本語</button>
+			<button class="language-button" data-language="ko">한국어</button>
 		</div>
   <pre style='background-color: transparent; border: none;'>${header}</pre>
   <pre>${output}</pre>
