@@ -1024,11 +1024,9 @@ ${วเลสSec}
 			document.querySelector('#agreeButton').textContent = selectedLanguage.agree;
 		}
 	</script>
-</head>
-
-  `；
+</head>；
 	// Join output with newlines, wrap inside <html> and <body>
-	return `
+return `
   <html>
   ${htmlHead}
 <body>
