@@ -741,65 +741,215 @@ ${วเลสSec}
 
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
-  <head>
-	<title>EDtunnel: vless configuration</title>
-	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/EDtunnel-rev/EDtunnel-rev if you found it useful!'>
-	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
+<head>
+	<title>EDtunnel: VLESS Configuration</title>
+	<meta name='description' content='This is a tool for generating VLESS protocol configurations. Give us a star on GitHub https://github.com/EDtunnel-rev/EDtunnel-rev if you found it useful!'>
+	<meta name='keywords' content='EDtunnel, Cloudflare Pages, Cloudflare Worker, Severless'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<meta property='og:site_name' content='EDtunnel: vless configuration' />
+	<meta property='og:site_name' content='EDtunnel: VLESS Configuration' />
 	<meta property='og:type' content='website' />
-	<meta property='og:title' content='EDtunnel-rev - vless configuration and subscribe output' />
-	<meta property='og:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
+	<meta property='og:title' content='EDtunnel-rev - VLESS Configuration and Subscribe Output' />
+	<meta property='og:description' content='Use Cloudflare Pages and Worker Severless to implement VLESS protocol' />
 	<meta property='og:url' content='https://${hostName}/' />
 	<meta property='og:image' content='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(`วเลส://${userIDs.split(",")[0]}@${hostName}${commonUrlPart}`)}' />
 	<meta name='twitter:card' content='summary_large_image' />
-	<meta name='twitter:title' content='EDtunnel - vless configuration and subscribe output' />
-	<meta name='twitter:description' content='Use cloudflare pages and worker severless to implement วเลส protocol' />
+	<meta name='twitter:title' content='EDtunnel - VLESS Configuration and Subscribe Output' />
+	<meta name='twitter:description' content='Use Cloudflare Pages and Worker Severless to implement VLESS protocol' />
 	<meta name='twitter:url' content='https://${hostName}/' />
 	<meta name='twitter:image' content='https://cloudflare-ipfs.com/ipfs/bafybeigd6i5aavwpr6wvnwuyayklq3omonggta4x2q7kpmgafj357nkcky' />
 	<meta property='og:image:width' content='1500' />
 	<meta property='og:image:height' content='1500' />
 	<style>
-	body {
-	  font-family: Arial, sans-serif;
-	  background-color: #f0f0f0;
-	  color: #333;
-	  padding: 10px;
-	}
-	a {
-	  color: #1a0dab;
-	  text-decoration: none;
-	}
-	img {
-	  max-width: 100%;
-	  height: auto;
-	}
-	pre {
-	  white-space: pre-wrap;
-	  word-wrap: break-word;
-	  background-color: #fff;
-	  border: 1px solid #ddd;
-	  padding: 15px;
-	  margin: 10px 0;
-	}
-	/* Dark mode */
-	@media (prefers-color-scheme: dark) {
-	  body {
-		background-color: #333;
-		color: #f0f0f0;
-	  }
-	  a {
-		color: #9db4ff;
-	  }
-	  pre {
-		background-color: #282a36;
-		border-color: #6272a4;
-	  }
-	}
+		body {
+			font-family: 'Roboto', sans-serif;
+			background-color: #0a0f1c;
+			color: #e0e6f1;
+			padding: 20px;
+			margin: 0;
+			transition: all 0.3s ease;
+		}
+		a {
+			color: #1abc9c;
+			text-decoration: none;
+			transition: color 0.3s;
+		}
+		a:hover {
+			color: #16a085;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+		pre {
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			background-color: #1b2735;
+			border: 1px solid #34495e;
+			padding: 20px;
+			margin: 20px 0;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			color: #c8d6e5;
+			font-size: 1rem;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			color: #1abc9c;
+			text-shadow: 0 0 10px #1abc9c, 0 0 20px #1abc9c, 0 0 30px #1abc9c, 0 0 40px #1abc9c, 0 0 50px #1abc9c, 0 0 60px #1abc9c, 0 0 70px #1abc9c;
+			font-family: 'Orbitron', sans-serif;
+		}
+		button {
+			background-color: #1abc9c;
+			color: #0a0f1c;
+			border: none;
+			padding: 10px 20px;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.3s;
+			border-radius: 5px;
+		}
+		button:hover {
+			background-color: #16a085;
+			transform: translateY(-2px);
+		}
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(5px);
+			-webkit-backdrop-filter: blur(5px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+		/* Dark mode */
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: #0a0f1c;
+				color: #e0e6f1;
+			}
+			a {
+				color: #1abc9c;
+			}
+			pre {
+				background-color: #1b2735;
+				border-color: #34495e;
+				color: #c8d6e5;
+			}
+			h1, h2, h3, h4, h5, h6 {
+				color: #1abc9c;
+			}
+		}
+		/* Light mode */
+		@media (prefers-color-scheme: light) {
+			body {
+				background-color: #f0f0f0;
+				color: #333;
+			}
+			a {
+				color: #1a0dab;
+			}
+			pre {
+				background-color: #fff;
+				border-color: #ddd;
+				color: #333;
+			}
+			h1, h2, h3, h4, h5, h6 {
+				color: #1a0dab;
+				text-shadow: none;
+			}
+		}
+		/* Modal styles */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.7);
+			padding-top: 60px;
+		}
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 600px;
+			border-radius: 10px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		.modal-button {
+			display: block;
+			width: 100%;
+			background-color: #1abc9c;
+			color: white;
+			border: none;
+			padding: 15px;
+			font-size: 1.1rem;
+			cursor: pointer;
+			margin-top: 20px;
+			border-radius: 5px;
+			transition: background-color 0.3s;
+		}
+		.modal-button:hover {
+			background-color: #16a085;
+		}
 	</style>
+	<!-- Add Google Fonts -->
+	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500;700&display=swap' rel='stylesheet'>
 	<!-- Add FontAwesome library -->
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-  </head>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Get the modal
+			var modal = document.getElementById("myModal");
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+			// Show the modal on page load
+			modal.style.display = "block";
+			// Get the agree button
+			var agreeButton = document.getElementById("agreeButton");
+			// Enable agree button only if checkbox is checked
+			var checkbox = document.getElementById("agreementCheckbox");
+			checkbox.addEventListener('change', function() {
+				agreeButton.disabled = !this.checked;
+			});
+			// When the user clicks the agree button, close the modal
+			agreeButton.onclick = function() {
+				modal.style.display = "none";
+			}
+		});
+	</script>
+</head>
+
   `;
 
 	// Join output with newlines, wrap inside <html> and <body>
@@ -807,6 +957,34 @@ ${วเลสSec}
   <html>
   ${htmlHead}
   <body>
+  	<!-- Modal -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>User Agreement</h2>
+			<p>Before using this tool, please read and agree to the following terms:</p>
+			<p>This project is an open-source tool provided for generating VLESS protocol configurations. By using this tool, you agree to the following:</p>
+			<ol>
+				<li><strong>Compliance with Laws:</strong> You agree to use this tool in full compliance with all local, national, and international laws and regulations.</li>
+				<li><strong>No Misuse:</strong> You agree not to misuse this tool for any illegal, unethical, or immoral activities. This includes, but is not limited to, using it to transmit or facilitate the transmission of unwholesome, harmful, or offensive content.</li>
+				<li><strong>Responsibility Disclaimer:</strong> All actions taken using this tool are your own responsibility. The creators and contributors of this project, including the GitHub account <a href="https://github.com/EDtunnel-rev" target="_blank">EDtunnel-rev</a>, are not aware of or responsible for how you choose to use this tool.</li>
+				<li><strong>No Liability:</strong> The creators and contributors of this project are not liable for any consequences resulting from your use of this tool, including but not limited to legal, financial, or reputational damages.</li>
+				<li><strong>Non-affiliation:</strong> This tool is provided independently and is not affiliated with or endorsed by any organization, government, or corporate entity.</li>
+				<li><strong>Open Source Contributions:</strong> This project is contributed by the GitHub account <a href="https://github.com/EDtunnel-rev" target="_blank">EDtunnel-rev</a>. The actual controller of this account is Satdog, whose official website is <a href="https://satdog.us.kg" target="_blank">https://satdog.us.kg</a>. Satdog's GitHub official account is <a href="https://github.com/EXEthereum" target="_blank">EXEthereum</a>, with the official page at <a href="https://github.com/EXEthereum" target="_blank">https://github.com/EXEthereum</a>.</li>
+				<li><strong>Independence of the Author:</strong> The author of this project is not aware of and is not responsible for how this tool is used. The author does not endorse or condone any particular use case for this tool.</li>
+				<li><strong>Amendments:</strong> The terms of this agreement may be updated or changed at any time, and it is your responsibility to stay informed of such changes by reviewing the agreement periodically.</li>
+			</ol>
+			<p>Please confirm your agreement to these terms by checking the box below and clicking "Agree".</p>
+			<label><input type="checkbox" id="agreementCheckbox"> I agree to the terms and conditions</label>
+			<button id="agreeButton" class="modal-button" disabled>Agree</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<h1>Welcome to EDtunnel: VLESS Configuration</h1>
+		<p>Generate your VLESS protocol configuration with ease and efficiency. This tool is powered by Cloudflare Pages and Worker Severless technology to deliver seamless performance.</p>
+		<!-- Main content goes here -->
+	</div>
   <pre style='background-color: transparent; border: none;'>${header}</pre>
   <pre>${output}</pre>
   </body>
