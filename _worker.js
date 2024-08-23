@@ -1067,14 +1067,6 @@ ${วเลสSec}
 			<button class="theme-button" data-theme="gold">Gold</button>
 			<button class="theme-button" data-theme="purple">Purple</button>
 		</div>
-
-		<div class="language-switcher">
-			<button class="language-button" data-language="en">English</button>
-			<button class="language-button" data-language="zh">中文</button>
-			<button class="language-button" data-language="fr">Français</button>
-			<button class="language-button" data-language="ja">日本語</button>
-			<button class="language-button" data-language="ko">한국어</button>
-		</div>
   <pre style='background-color: transparent; border: none;'>${header}</pre>
   <pre>${output}</pre>
   </body>
