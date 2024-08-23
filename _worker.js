@@ -761,19 +761,19 @@ ${วเลสSec}
 	<style>
 		body {
 			font-family: 'Roboto', sans-serif;
-			background-color: #0a0f1c;
-			color: #e0e6f1;
+			background-color: var(--background-color, #f0f0f0);
+			color: var(--text-color, #333);
 			padding: 20px;
 			margin: 0;
 			transition: all 0.3s ease;
 		}
 		a {
-			color: #1abc9c;
+			color: var(--link-color, #1a0dab);
 			text-decoration: none;
 			transition: color 0.3s;
 		}
 		a:hover {
-			color: #16a085;
+			color: var(--link-hover-color, #1a0dab);
 		}
 		img {
 			max-width: 100%;
@@ -784,23 +784,23 @@ ${วเลสSec}
 		pre {
 			white-space: pre-wrap;
 			word-wrap: break-word;
-			background-color: #1b2735;
-			border: 1px solid #34495e;
+			background-color: var(--pre-background-color, #fff);
+			border: 1px solid var(--pre-border-color, #ddd);
 			padding: 20px;
 			margin: 20px 0;
 			border-radius: 10px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			color: #c8d6e5;
+			color: var(--pre-text-color, #333);
 			font-size: 1rem;
 		}
 		h1, h2, h3, h4, h5, h6 {
-			color: #1abc9c;
-			text-shadow: 0 0 10px #1abc9c, 0 0 20px #1abc9c, 0 0 30px #1abc9c, 0 0 40px #1abc9c, 0 0 50px #1abc9c, 0 0 60px #1abc9c, 0 0 70px #1abc9c;
+			color: var(--header-color, #1a0dab);
+			text-shadow: var(--header-shadow, none);
 			font-family: 'Orbitron', sans-serif;
 		}
 		button {
-			background-color: #1abc9c;
-			color: #0a0f1c;
+			background-color: var(--button-background-color, #1a0dab);
+			color: var(--button-text-color, white);
 			border: none;
 			padding: 10px 20px;
 			font-size: 1rem;
@@ -809,7 +809,7 @@ ${วเลสSec}
 			border-radius: 5px;
 		}
 		button:hover {
-			background-color: #16a085;
+			background-color: var(--button-hover-background-color, #1a0dab);
 			transform: translateY(-2px);
 		}
 		.container {
@@ -823,42 +823,58 @@ ${วเลสSec}
 			-webkit-backdrop-filter: blur(5px);
 			border: 1px solid rgba(255, 255, 255, 0.1);
 		}
-		/* Dark mode */
-		@media (prefers-color-scheme: dark) {
-			body {
-				background-color: #0a0f1c;
-				color: #e0e6f1;
-			}
-			a {
-				color: #1abc9c;
-			}
-			pre {
-				background-color: #1b2735;
-				border-color: #34495e;
-				color: #c8d6e5;
-			}
-			h1, h2, h3, h4, h5, h6 {
-				color: #1abc9c;
-			}
+		.theme-button {
+			margin: 10px;
+			cursor: pointer;
 		}
-		/* Light mode */
-		@media (prefers-color-scheme: light) {
-			body {
-				background-color: #f0f0f0;
-				color: #333;
-			}
-			a {
-				color: #1a0dab;
-			}
-			pre {
-				background-color: #fff;
-				border-color: #ddd;
-				color: #333;
-			}
-			h1, h2, h3, h4, h5, h6 {
-				color: #1a0dab;
-				text-shadow: none;
-			}
+		.language-button {
+			margin: 5px;
+			cursor: pointer;
+		}
+		/* Dark mode */
+		.dark {
+			--background-color: #0a0f1c;
+			--text-color: #e0e6f1;
+			--link-color: #1abc9c;
+			--link-hover-color: #16a085;
+			--pre-background-color: #1b2735;
+			--pre-border-color: #34495e;
+			--pre-text-color: #c8d6e5;
+			--header-color: #1abc9c;
+			--header-shadow: 0 0 10px #1abc9c, 0 0 20px #1abc9c, 0 0 30px #1abc9c;
+			--button-background-color: #1abc9c;
+			--button-hover-background-color: #16a085;
+			--button-text-color: #0a0f1c;
+		}
+		/* Gold mode */
+		.gold {
+			--background-color: #1f1f1f;
+			--text-color: #d4af37;
+			--link-color: #ffd700;
+			--link-hover-color: #ffa500;
+			--pre-background-color: #333;
+			--pre-border-color: #555;
+			--pre-text-color: #ffdd44;
+			--header-color: #ffd700;
+			--header-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+			--button-background-color: #ffd700;
+			--button-hover-background-color: #ffdd44;
+			--button-text-color: #333;
+		}
+		/* Purple mode */
+		.purple {
+			--background-color: #1a0033;
+			--text-color: #d9b3ff;
+			--link-color: #c71585;
+			--link-hover-color: #d02090;
+			--pre-background-color: #330066;
+			--pre-border-color: #663399;
+			--pre-text-color: #e6e6fa;
+			--header-color: #ba55d3;
+			--header-shadow: 0 0 10px #ba55d3, 0 0 20px #ba55d3, 0 0 30px #ba55d3;
+			--button-background-color: #ba55d3;
+			--button-hover-background-color: #dda0dd;
+			--button-text-color: #fff;
 		}
 		/* Modal styles */
 		.modal {
@@ -913,39 +929,100 @@ ${วเลสSec}
 		}
 	</style>
 	<!-- Add Google Fonts -->
-	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500;700&display=swap' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
 	<!-- Add FontAwesome library -->
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 	<script>
+		// Language and Theme handling
+		let currentTheme = localStorage.getItem('theme') || 'light';
+		let currentLanguage = navigator.language || 'en';
+		const themeButtonMapping = {
+			light: "default",
+			dark: "dark",
+			gold: "gold",
+			purple: "purple"
+		};
 		document.addEventListener('DOMContentLoaded', function() {
-			// Get the modal
-			var modal = document.getElementById("myModal");
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-				modal.style.display = "none";
-			}
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-				}
-			}
-			// Show the modal on page load
-			modal.style.display = "block";
-			// Get the agree button
-			var agreeButton = document.getElementById("agreeButton");
-			// Enable agree button only if checkbox is checked
-			var checkbox = document.getElementById("agreementCheckbox");
-			checkbox.addEventListener('change', function() {
+			document.body.classList.add(currentTheme);
+
+			const languageButtons = document.querySelectorAll('.language-button');
+			languageButtons.forEach(button => {
+				button.addEventListener('click', function() {
+					const language = this.dataset.language;
+					currentLanguage = language;
+					updateLanguage(language);
+				});
+			});
+
+			const themeButtons = document.querySelectorAll('.theme-button');
+			themeButtons.forEach(button => {
+				button.addEventListener('click', function() {
+					const theme = this.dataset.theme;
+					changeTheme(theme);
+				});
+			});
+
+			const modal = document.getElementById('myModal');
+			const closeBtn = document.getElementsByClassName('close')[0];
+			const agreeButton = document.getElementById('agreeButton');
+			const agreementCheckbox = document.getElementById('agreementCheckbox');
+
+			modal.style.display = 'block';
+			agreementCheckbox.addEventListener('change', function() {
 				agreeButton.disabled = !this.checked;
 			});
-			// When the user clicks the agree button, close the modal
-			agreeButton.onclick = function() {
-				modal.style.display = "none";
-			}
+			agreeButton.addEventListener('click', function() {
+				modal.style.display = 'none';
+			});
+			closeBtn.addEventListener('click', function() {
+				modal.style.display = 'none';
+			});
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = 'none';
+				}
+			};
 		});
+
+		function changeTheme(theme) {
+			document.body.className = theme;
+			localStorage.setItem('theme', theme);
+		}
+
+		function updateLanguage(language) {
+			// Language data
+			const languages = {
+				en: {
+					title: "User Agreement",
+					terms: "Before using this tool, please read and agree to the following terms...",
+					agree: "I agree to the terms and conditions"
+				},
+				zh: {
+					title: "用户协议",
+					terms: "在使用此工具之前，请阅读并同意以下条款...",
+					agree: "我同意条款和条件"
+				},
+				fr: {
+					title: "Accord de l'utilisateur",
+					terms: "Avant d'utiliser cet outil, veuillez lire et accepter les conditions suivantes...",
+					agree: "J'accepte les termes et conditions"
+				},
+				ja: {
+					title: "ユーザー同意書",
+					terms: "このツールを使用する前に、次の条件を読んで同意してください...",
+					agree: "利用規約に同意します"
+				},
+				ko: {
+					title: "사용자 동의서",
+					terms: "이 도구를 사용하기 전에 다음 이용 약관을 읽고 동의하십시오...",
+					agree: "이용 약관에 동의합니다"
+				}
+			};
+			const selectedLanguage = languages[language] || languages.en;
+			document.querySelector('.modal-content h2').textContent = selectedLanguage.title;
+			document.querySelector('.modal-content p').textContent = selectedLanguage.terms;
+			document.querySelector('#agreeButton').textContent = selectedLanguage.agree;
+		}
 	</script>
 </head>
 
@@ -956,13 +1033,13 @@ ${วเลสSec}
   <html>
   ${htmlHead}
   <body>
-  	<!-- Modal -->
+<body>
+	<!-- Modal -->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<h2>User Agreement</h2>
-			<p>Before using this tool, please read and agree to the following terms:</p>
-			<p>This project is an open-source tool provided for generating VLESS protocol configurations. By using this tool, you agree to the following:</p>
+			<p>Before using this tool, please read and agree to the following terms...</p>
 			<ol>
 				<li><strong>Compliance with Laws:</strong> You agree to use this tool in full compliance with all local, national, and international laws and regulations.</li>
 				<li><strong>No Misuse:</strong> You agree not to misuse this tool for any illegal, unethical, or immoral activities. This includes, but is not limited to, using it to transmit or facilitate the transmission of unwholesome, harmful, or offensive content.</li>
@@ -982,8 +1059,22 @@ ${วเลสSec}
 	<div class="container">
 		<h1>Welcome to EDtunnel: VLESS Configuration</h1>
 		<p>Generate your VLESS protocol configuration with ease and efficiency. This tool is powered by Cloudflare Pages and Worker Severless technology to deliver seamless performance.</p>
-		<!-- Main content goes here -->
-	</div>
+		
+		<!-- Theme and Language Switcher -->
+		<div class="theme-switcher">
+			<button class="theme-button" data-theme="light">Light</button>
+			<button class="theme-button" data-theme="dark">Dark</button>
+			<button class="theme-button" data-theme="gold">Gold</button>
+			<button class="theme-button" data-theme="purple">Purple</button>
+		</div>
+
+		<div class="language-switcher">
+			<button class="language-button" data-language="en">English</button>
+			<button class="language-button" data-language="zh">中文</button>
+			<button class="language-button" data-language="fr">Français</button>
+			<button class="language-button" data-language="ja">日本語</button>
+			<button class="language-button" data-language="ko">한국어</button>
+		</div>
   <pre style='background-color: transparent; border: none;'>${header}</pre>
   <pre>${output}</pre>
   </body>
