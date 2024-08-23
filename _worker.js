@@ -742,8 +742,8 @@ ${วเลสSec}
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
   <head>
-	<title>EDtunnel: วเลส configuration</title>
-	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/3Kmfi6HP/EDtunnel if you found it useful!'>
+	<title>EDtunnel: vless configuration</title>
+	<meta name='description' content='This is a tool for generating vless protocol configurations. Give us a star on GitHub https://github.com/EDtunnel-rev/EDtunnel-rev if you found it useful!'>
 	<meta name='keywords' content='EDtunnel, cloudflare pages, cloudflare worker, severless'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<meta property='og:site_name' content='EDtunnel: vless configuration' />
