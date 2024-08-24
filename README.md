@@ -104,7 +104,9 @@ The path `/uuid your seetting` to get the clash config and vless:// link.
 ## Special Thanks
 
 1.Github users who contributes to this program, no matter whether their branches are merged by the owner. They're --- @rayhanbone. @kardus911 and others.(see them at https://github.com/EDtunnel-rev/EDtunnel-rev/pulls and https://github.com/EDtunnel-rev/EDtunnel-rev/graphs/contributors)
+
 2.Those who have forked, starred, and watched this is repository.(see them at https://github.com/EDtunnel-rev/EDtunnel-rev/watchers, https://github.com/EDtunnel-rev/EDtunnel-rev/stargazers, https://github.com/EDtunnel-rev/EDtunnel-rev/forks)
+
 3.All people from linux.do. They supported me and helped me with this repository.
 
 ## Star History
