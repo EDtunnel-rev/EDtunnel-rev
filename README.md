@@ -45,29 +45,29 @@ Note: `UUID` is the uuid you want to set. pages.dev and worker.dev all of them m
    ```
 
    note: uuid1, uuid2, uuid3 are separated by commas`,`.
-   when you set multiple uuid, you can use `https://edtunnel.pages.dev/uuid1` to get the clash config and vless:// link.
+   when you set multiple uuid, you can use `https://edtunnel-rev.pages.dev/uuid1` to get the clash config and vless:// link.
 
 ## subscribe vless:// link (Optional)
 
-1. visit `https://edtunnel.pages.dev/uuid your set` to get the subscribe link.
+1. visit `https://edtunnel-rev.pages.dev/uuid your set` to get the subscribe link.
 
-2. visit `https://edtunnel.pages.dev/sub/uuid your set` to get the subscribe content with `uuid your set` path.
-
-   note: `uuid your set` is the uuid you set in UUID enviroment or `wrangler.toml`, `_worker.js` file.
-   when you set multiple uuid, you can use `https://edtunnel.pages.dev/sub/uuid1` to get the subscribe content with `uuid1` path.(only support first uuid in multiple uuid set)
-
-3. visit `https://edtunnel.pages.dev/sub/uuid your set/?format=clash` to get the subscribe content with `uuid your set` path and `clash` format. content will return with base64 encode.
+2. visit `https://edtunnel-rev.pages.dev/sub/uuid your set` to get the subscribe content with `uuid your set` path.
 
    note: `uuid your set` is the uuid you set in UUID enviroment or `wrangler.toml`, `_worker.js` file.
-   when you set multiple uuid, you can will use `https://edtunnel.pages.dev/sub/uuid1/?format=clash` to get the subscribe content with `uuid1` path and `clash` format.(only support first uuid in multiple uuid set)
+   when you set multiple uuid, you can use `https://edtunnel-rev.pages.dev/sub/uuid1` to get the subscribe content with `uuid1` path.(only support first uuid in multiple uuid set)
+
+3. visit `https://edtunnel-rev.pages.dev/sub/uuid your set/?format=clash` to get the subscribe content with `uuid your set` path and `clash` format. content will return with base64 encode.
+
+   note: `uuid your set` is the uuid you set in UUID enviroment or `wrangler.toml`, `_worker.js` file.
+   when you set multiple uuid, you can will use `https://edtunnel-rev.pages.dev/sub/uuid1/?format=clash` to get the subscribe content with `uuid1` path and `clash` format.(only support first uuid in multiple uuid set)
 
 ## subscribe Cloudflare bestip(pure ip) link
 
-1. visit `https://edtunnel.pages.dev/bestip/uuid your set` to get subscribe info.
+1. visit `https://edtunnel-rev.pages.dev/bestip/uuid your set` to get subscribe info.
 
 2. cpoy subscribe url link `https://edtunnel.pages.dev/bestip/uuid your set` to any clients(clash/v2rayN/v2rayNG) you want to use.
 
-3. done. if have any questions please join [@edtunnel](https://t.me/edtunnel)
+3. done. if have any questions please join [@edtunrev](https://t.me/edtunrev)
 
 ## multiple port support (Optional)
 
@@ -106,7 +106,7 @@ The path `/uuid your seetting` to get the clash config and vless:// link.
 1.Github users who contributes to this program,no matter whether their branches are merged by the owner.They're --- @rayhanbone and others.
 ## Star History
 
-<a href="https://star-history.com/#3Kmfi6HP/EDtunnel&Date">
+<a href="https://star-history.com/#EDtunnel-rev/EDtunnel-rev&Date">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=EDtunnel-rev/EDtunnel-rev&type=Date&theme=dark" />
     <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=EDtunnel-rev/EDtunnel-rev&type=Date" />
