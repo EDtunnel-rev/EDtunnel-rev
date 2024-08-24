@@ -65,7 +65,7 @@ Note: `UUID` is the uuid you want to set. pages.dev and worker.dev all of them m
 
 1. visit `https://edtunnel-rev.pages.dev/bestip/uuid your set` to get subscribe info.
 
-2. cpoy subscribe url link `https://edtunnel.pages.dev/bestip/uuid your set` to any clients(clash/v2rayN/v2rayNG) you want to use.
+2. cpoy subscribe url link `https://edtunnel-rev.pages.dev/bestip/uuid your set` to any clients(clash/v2rayN/v2rayNG) you want to use.
 
 3. done. if have any questions please join [@edtunrev](https://t.me/edtunrev)
 
@@ -101,9 +101,12 @@ resons: Outbound TCP sockets to Cloudflare IP ranges are temporarily blocked, pl
 frist, open your pages.dev domain `https://edtunnel.pages.dev/` in your browser, then you can see the following page:
 The path `/uuid your seetting` to get the clash config and vless:// link.
 
-## Thanks To
+## Special Thanks
 
-1.Github users who contributes to this program,no matter whether their branches are merged by the owner.They're --- @rayhanbone and others.
+1.Github users who contributes to this program, no matter whether their branches are merged by the owner. They're --- @rayhanbone. @kardus911 and others.(see them at https://github.com/EDtunnel-rev/EDtunnel-rev/pulls and https://github.com/EDtunnel-rev/EDtunnel-rev/graphs/contributors)
+2.Those who have forked, starred, and watched this is repository.(see them at https://github.com/EDtunnel-rev/EDtunnel-rev/watchers, https://github.com/EDtunnel-rev/EDtunnel-rev/stargazers, https://github.com/EDtunnel-rev/EDtunnel-rev/forks)
+3.All people from linux.do. They supported me and helped me with this repository.
+
 ## Star History
 
 <a href="https://star-history.com/#EDtunnel-rev/EDtunnel-rev&Date">
