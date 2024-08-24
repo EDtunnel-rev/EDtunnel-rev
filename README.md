@@ -98,7 +98,7 @@ resons: Outbound TCP sockets to Cloudflare IP ranges are temporarily blocked, pl
 
 ## Usage
 
-frist, open your pages.dev domain `https://edtunnel.pages.dev/` in your browser, then you can see the following page:
+frist, open your pages.dev domain `https://edtunnel-rev.pages.dev/` in your browser, then you can see the following page:
 The path `/uuid your seetting` to get the clash config and vless:// link.
 
 ## Special Thanks
