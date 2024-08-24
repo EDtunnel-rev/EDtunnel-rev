@@ -101,6 +101,9 @@ resons: Outbound TCP sockets to Cloudflare IP ranges are temporarily blocked, pl
 frist, open your pages.dev domain `https://edtunnel.pages.dev/` in your browser, then you can see the following page:
 The path `/uuid your seetting` to get the clash config and vless:// link.
 
+## Thanks To
+
+1.Github users who contributes to this program,no matter whether their branches are merged by the owner.They're --- @rayhanbone and others.
 ## Star History
 
 <a href="https://star-history.com/#3Kmfi6HP/EDtunnel&Date">
