@@ -94,11 +94,11 @@ jobs:
         # github.com/cloudflare/wrangler-action
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
+          apiToken: Kp1XLh_oPLV25QexJ_0cVzSGMVHYVMrlCn_U01Sa
           # input overrides env-defaults, regardless
           environment: ${{ env.WORKERS_ENV }}
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: 44e845096a8ec8178efc22a7ef0dedb6
           GIT_COMMIT_ID: ${{ env.GIT_REF }}
 
       - name: 🎤 Notice
