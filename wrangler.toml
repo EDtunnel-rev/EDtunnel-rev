@@ -18,6 +18,8 @@ pattern = "ina.putangina.com.server-sg.paok17.workers.dev"
 custom_domain = true
 [[routes]]
 pattern = "wikwik.kuntul.id.server-sg.paok17.workers.dev"
+custom_domain = true[[routes]]
+pattern = "space.byu.id.server-sg.paok17.workers.dev"
 custom_domain = true
 
 [vars]
