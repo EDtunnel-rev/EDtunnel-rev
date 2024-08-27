@@ -1,15 +1,19 @@
-name = "cf-worker-ws-dev" # todo
+name = "server-sg" # todo
 #name = "cf-worker-connect-test" # todo
 #main = "test/worker/cf-cdn-cgi-trace2.js"
 #main = "test/worker/worker-connect-test.js"
 main = "_worker.js"
 compatibility_date = "2023-05-26"
 [[routes]]
-pattern = "reyre-wrt.biz.id"
+pattern = "server-sg.paok17.workers.dev"
 custom_domain = true
 [[routes]]
-pattern = "edge.skype.com.reyre-wrt.biz.id"
+pattern = "quiz.int.vidio.com.server-sg.paok17.workers.dev"
 custom_domain = true
+[[routes]]
+pattern = "quiz.vidio.com.server-sg.paok17.workers.dev"
+custom_domain = true
+
 
 [vars]
 # UUID = "d342d11e-d424-4583-b36e-524ab1f0afa4"
@@ -18,4 +22,4 @@ custom_domain = true
 # NODE_ID = "1"
 # API_TOKEN = "example_dev_token"
 # API_HOST = "api.v2board.com"
-UUID = "1b6c1745-992e-4aac-8685-266c090e50ea,89b64978-6244-4bf3-bf64-67ade4ce5c8f,d342d11e-d424-4583-b36e-524ab1f0afa4,49379c4f-2e80-4c17-bff6-ef13bd1af934"
+UUID = "f78e3259-7f9d-4c11-bc5f-9c133b1a6863"
