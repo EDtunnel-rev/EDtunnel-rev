@@ -3,6 +3,7 @@ name = "server-sg" # todo
 #main = "test/worker/cf-cdn-cgi-trace2.js"
 #main = "test/worker/worker-connect-test.js"
 main = "_worker.js"
+compatibility_date = "2023-05-27"
 [[routes]]
 pattern = "server-sg.paok17.workers.dev"
 custom_domain = true
