@@ -11,7 +11,6 @@ const listProxy = [
     { path: '/id6', proxy: '35.219.50.99' },
     { path: '/sg1', proxy: '104.248.145.216' },
     { path: '/sg2', proxy: '51.91.40.26' },
-    { path: '/xl666', proxy: '140.213.160.6' },
     //tambahin sendiri
 ];
 let proxyIP;
