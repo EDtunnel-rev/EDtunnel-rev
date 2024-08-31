@@ -20,98 +20,228 @@ if (!isValidUUID(userID)) {
 	throw new Error('uuid is invalid');
 }
 
+function homePageHTML() {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDtunnel-rev - VLESS Proxy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .content {
+            max-width: 800px;
+            margin: 20px;
+        }
+        .special-thanks {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <h2>导航</h2>
+        <a href="https://edt.us.kg" target="_blank">项目说明</a>
+        <a href="https://t.me/edtunrev" target="_blank">Telegram交流群</a>
+    </div>
+
+    <!-- 主内容 -->
+    <div class="main-content">
+        <h1>EDtunnel-rev - The Best VLESS Proxy Based on Cloudflare Pages</h1>
+        <div class="content">
+            <h2>Welcome to EDtunnel-rev!</h2>
+            <p>This tool provides a robust and efficient way to use the VLESS proxy protocol using Cloudflare Pages. Below is an input field where you can enter a UUID to generate a custom VLESS configuration page.</p>
+            <input type="text" id="uuidInput" placeholder="Enter your UUID here">
+            <button onclick="redirectToUUID()">Generate Configuration</button>
+
+            <script>
+                function redirectToUUID() {
+                    const uuid = document.getElementById('uuidInput').value;
+                    if (uuid) {
+                        window.location.href = '/' + uuid;
+                    } else {
+                        alert('Please enter a valid UUID!');
+                    }
+                }
+            </script>
+
+            <div class="special-thanks">
+                <h2>Special Thanks</h2>
+                <p>1. Github users who contribute to this program, no matter whether their branches are merged by the owner. They're @rayhanbone, @kardus911, and others. (See them at <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/pulls" target="_blank">pull requests</a> and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/graphs/contributors" target="_blank">contributors</a>)</p>
+                <p>2. Those who have forked, starred, and watched this repository. (See them at <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/watchers" target="_blank">watchers</a>, <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/stargazers" target="_blank">stargazers</a>, and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/forks" target="_blank">forks</a>)</p>
+                <p>3. All people from linux.do. They supported me and helped me with this repository.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+    `;
+}
+
+
+
 export default {
-	/**
-	 * @param {import("@cloudflare/workers-types").Request} request
-	 * @param {{UUID: string, พร็อกซีไอพี: string, DNS_RESOLVER_URL: string, NODE_ID: int, API_HOST: string, API_TOKEN: string}} env
-	 * @param {import("@cloudflare/workers-types").ExecutionContext} ctx
-	 * @returns {Promise<Response>}
-	 */
-	async fetch(request, env, ctx) {
-		// uuid_validator(request);
-		try {
-			userID = env.UUID || userID;
-			พร็อกซีไอพี = env.PROXYIP || พร็อกซีไอพี;
-			dohURL = env.DNS_RESOLVER_URL || dohURL;
-			let userID_Path = userID;
-			if (userID.includes(',')) {
-				userID_Path = userID.split(',')[0];
-			}
-			const upgradeHeader = request.headers.get('Upgrade');
-			if (!upgradeHeader || upgradeHeader !== 'websocket') {
-				const url = new URL(request.url);
-				switch (url.pathname) {
-					case `/cf`: {
-						return new Response(JSON.stringify(request.cf, null, 4), {
-							status: 200,
-							headers: {
-								"Content-Type": "application/json;charset=utf-8",
-							},
-						});
-					}
-					case `/${userID_Path}`: {
-						const วเลสConfig = getวเลสConfig(userID, request.headers.get('Host'));
-						return new Response(`${วเลสConfig}`, {
-							status: 200,
-							headers: {
-								"Content-Type": "text/html; charset=utf-8",
-							}
-						});
-					};
-					case `/sub/${userID_Path}`: {
-						const url = new URL(request.url);
-						const searchParams = url.searchParams;
-						const วเลสSubConfig = สร้างวเลสSub(userID, request.headers.get('Host'));
-						// Construct and return response object
-						return new Response(btoa(วเลสSubConfig), {
-							status: 200,
-							headers: {
-								"Content-Type": "text/plain;charset=utf-8",
-							}
-						});
-					};
-					case `/bestip/${userID_Path}`: {
-						const headers = request.headers;
-						const url = `https://sub.xf.free.hr/auto?host=${request.headers.get('Host')}&uuid=${userID}&path=/`;
-						const bestSubConfig = await fetch(url, { headers: headers });
-						return bestSubConfig;
-					};
-					default:
-						// return new Response('Not found', { status: 404 });
-						// For any other path, reverse proxy to 'ramdom website' and return the original response, caching it in the process
-						const randomHostname = cn_hostnames[Math.floor(Math.random() * cn_hostnames.length)];
-						const newHeaders = new Headers(request.headers);
-						newHeaders.set('cf-connecting-ip', '1.2.3.4');
-						newHeaders.set('x-forwarded-for', '1.2.3.4');
-						newHeaders.set('x-real-ip', '1.2.3.4');
-						newHeaders.set('referer', 'https://www.google.com/search?q=edtunnel');
-						// Use fetch to proxy the request to 15 different domains
-						const proxyUrl = 'https://' + randomHostname + url.pathname + url.search;
-						let modifiedRequest = new Request(proxyUrl, {
-							method: request.method,
-							headers: newHeaders,
-							body: request.body,
-							redirect: 'manual',
-						});
-						const proxyResponse = await fetch(modifiedRequest, { redirect: 'manual' });
-						// Check for 302 or 301 redirect status and return an error response
-						if ([301, 302].includes(proxyResponse.status)) {
-							return new Response(`Redirects to ${randomHostname} are not allowed.`, {
-								status: 403,
-								statusText: 'Forbidden',
-							});
-						}
-						// Return the response from the proxy server
-						return proxyResponse;
-				}
-			} else {
-				return await วเลสOverWSHandler(request);
-			}
-		} catch (err) {
-			/** @type {Error} */ let e = err;
-			return new Response(e.toString());
-		}
-	},
+    /**
+     * @param {import("@cloudflare/workers-types").Request} request
+     * @param {{UUID: string, พร็อกซีไอพี: string, DNS_RESOLVER_URL: string, NODE_ID: int, API_HOST: string, API_TOKEN: string}} env
+     * @param {import("@cloudflare/workers-types").ExecutionContext} ctx
+     * @returns {Promise<Response>}
+     */
+    async fetch(request, env, ctx) {
+        try {
+            userID = env.UUID || userID;
+            พร็อกซีไอพี = env.PROXYIP || พร็อกซีไอพี;
+            dohURL = env.DNS_RESOLVER_URL || dohURL;
+            let userID_Path = userID;
+            if (userID.includes(',')) {
+                userID_Path = userID.split(',')[0];
+            }
+            const upgradeHeader = request.headers.get('Upgrade');
+            
+            // 检查请求路径
+            const url = new URL(request.url);
+            
+            // 检查是否为根路径的直接访问
+            if (url.pathname === '/') {
+                return new Response(homePageHTML(), {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "text/html; charset=utf-8",
+                    },
+                });
+            }
+            
+            // 检查是否为 WebSocket 升级请求
+            if (!upgradeHeader || upgradeHeader !== 'websocket') {
+                switch (url.pathname) {
+                    case `/cf`: {
+                        // 返回请求的 Cloudflare 对象信息
+                        return new Response(JSON.stringify(request.cf, null, 4), {
+                            status: 200,
+                            headers: {
+                                "Content-Type": "application/json;charset=utf-8",
+                            },
+                        });
+                    }
+                    case `/${userID_Path}`: {
+                        // 返回生成的 vless 配置信息
+                        const วเลสConfig = getวเลสConfig(userID, request.headers.get('Host'));
+                        return new Response(`${วเลสConfig}`, {
+                            status: 200,
+                            headers: {
+                                "Content-Type": "text/html; charset=utf-8",
+                            }
+                        });
+                    }
+                    case `/sub/${userID_Path}`: {
+                        // 返回 vless 订阅信息
+                        const วเลสSubConfig = สร้างวเลสSub(userID, request.headers.get('Host'));
+                        return new Response(btoa(วเลสSubConfig), {
+                            status: 200,
+                            headers: {
+                                "Content-Type": "text/plain;charset=utf-8",
+                            }
+                        });
+                    }
+                    case `/bestip/${userID_Path}`: {
+                        // 请求最佳 IP 地址配置并返回
+                        const headers = request.headers;
+                        const url = `https://sub.xf.free.hr/auto?host=${request.headers.get('Host')}&uuid=${userID}&path=/`;
+                        const bestSubConfig = await fetch(url, { headers: headers });
+                        return bestSubConfig;
+                    }
+                    default:
+                        // 对于其他路径，进行反向代理请求到随机网站
+                        const randomHostname = cn_hostnames[Math.floor(Math.random() * cn_hostnames.length)];
+                        const newHeaders = new Headers(request.headers);
+                        newHeaders.set('cf-connecting-ip', '1.2.3.4');
+                        newHeaders.set('x-forwarded-for', '1.2.3.4');
+                        newHeaders.set('x-real-ip', '1.2.3.4');
+                        newHeaders.set('referer', 'https://www.google.com/search?q=edtunnel');
+                        
+                        // 构造代理请求
+                        const proxyUrl = 'https://' + randomHostname + url.pathname + url.search;
+                        let modifiedRequest = new Request(proxyUrl, {
+                            method: request.method,
+                            headers: newHeaders,
+                            body: request.body,
+                            redirect: 'manual',
+                        });
+                        
+                        // 发送代理请求并处理重定向
+                        const proxyResponse = await fetch(modifiedRequest, { redirect: 'manual' });
+                        if ([301, 302].includes(proxyResponse.status)) {
+                            return new Response(`Redirects to ${randomHostname} are not allowed.`, {
+                                status: 403,
+                                statusText: 'Forbidden',
+                            });
+                        }
+                        
+                        // 返回代理服务器的响应
+                        return proxyResponse;
+                }
+            } else {
+                // 处理 WebSocket 请求
+                return await วเลสOverWSHandler(request);
+            }
+        } catch (err) {
+            /** @type {Error} */ let e = err;
+            return new Response(e.toString());
+        }
+    },
 };
 
 export async function uuid_validator(request) {
