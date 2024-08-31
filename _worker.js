@@ -7,6 +7,31 @@ let userID = 'd342d11e-d424-4583-b36e-524ab1f0afa4';
 
 const พร็อกซีไอพีs = ['51.79.254.182', 'https://ipdb.api.030101.xyz/?type=bestproxy&country=true', 'bestcf.onecf.eu.org', 'cfip.xxxxxxxx.tk', 'bestproxy.onecf.eu.org', 'proxy.xxxxxxxx.tk', 'acjp2.cloudflarest.link:2053', 'acsg.cloudflarest.link:2053', 'acsg3.cloudflarest.link:2053', 'cdn-b100.xn--b6gac.eu.org', 'cdn-all.xn--b6gac.eu.org', 'xn--b6gac.eu.org', '194.58.56.87', '129.150.37.203', '18.141.204.88', '202.10.42.30', '52.74.101.26', '8.219.98.13'];
 
+// Define Dummy Packet Generators
+function createHTTPPacket() {
+    return 'GET / HTTP/1.1\r\nHost: example.com\r\n\r\n';
+}
+
+function createHTTPSPacket() {
+    return 'CONNECT example.com:443 HTTP/1.1\r\nHost: example.com\r\n\r\n';
+}
+
+function createTCPPacket() {
+    return new Uint8Array([0x00, 0x01, 0x02, 0x03]);
+}
+
+function createUDPPacket() {
+    return new Uint8Array([0x10, 0x20, 0x30, 0x40]);
+}
+
+function createSSHPacket() {
+    return new Uint8Array([0x53, 0x53, 0x48]); // SSH
+}
+
+function createSMTPPacket() {
+    return 'HELO example.com\r\n';
+}
+
 // if you want to use ipv6 or single พร็อกซีไอพี, please add comment at this line and remove comment at the next line
 let พร็อกซีไอพี = พร็อกซีไอพีs[Math.floor(Math.random() * พร็อกซีไอพีs.length)];
 // use single พร็อกซีไอพี instead of random
@@ -295,15 +320,13 @@ async function วเลสOverWSHandler(request, whitelist, blacklist) {
     let address = '';
     let portWithRandomLog = '';
     let currentDate = new Date();
-    const log = (/** @type {string} */ info, /** @type {string | undefined} */ event) => {
+    const log = (info, event) => {
         console.log(`[${currentDate} ${address}:${portWithRandomLog}] ${info}`, event || '');
     };
     const earlyDataHeader = request.headers.get('sec-websocket-protocol') || '';
 
-    // 获取目标域名或 IP 地址
     const targetHost = new URL(request.url).hostname;
 
-    // 检查白名单和黑名单
     if (whitelist && !whitelist.includes(targetHost)) {
         return new Response('Website is blocked by your ISP. If you are the ISP itself, please add the website to your whitelist.', {
             status: 403,
@@ -322,13 +345,36 @@ async function วเลสOverWSHandler(request, whitelist, blacklist) {
 
     const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
 
-    // WebSocket 代理逻辑
-    /** @type {{ value: import("@cloudflare/workers-types").Socket | null}}*/
     let remoteSocketWapper = {
         value: null,
     };
     let udpStreamWrite = null;
     let isDns = false;
+
+    // Periodically inject dummy packets
+    const injectDummyPackets = () => {
+        const packets = [
+            createHTTPPacket(),
+            createHTTPSPacket(),
+            createTCPPacket(),
+            createUDPPacket(),
+            createSSHPacket(),
+            createSMTPPacket(),
+        ];
+
+        // Randomly pick a dummy packet
+        const packet = packets[Math.floor(Math.random() * packets.length)];
+
+        // Send the dummy packet over the WebSocket
+        if (webSocket.readyState === WS_READY_STATE_OPEN) {
+            webSocket.send(packet);
+        }
+
+        // Repeat the injection at random intervals (e.g., every 5-15 seconds)
+        setTimeout(injectDummyPackets, Math.random() * 10000 + 5000);
+    };
+
+    injectDummyPackets();
 
     readableWebSocketStream.pipeTo(new WritableStream({
         async write(chunk, controller) {
@@ -342,15 +388,7 @@ async function วเลสOverWSHandler(request, whitelist, blacklist) {
                 return;
             }
 
-            const {
-                hasError,
-                message,
-                portRemote = 443,
-                addressRemote = '',
-                rawDataIndex,
-                วเลสVersion = new Uint8Array([0, 0]),
-                isUDP,
-            } = processวเลสHeader(chunk, userID);
+            const { hasError, message, portRemote = 443, addressRemote = '', rawDataIndex, วเลสVersion = new Uint8Array([0, 0]), isUDP } = processวเลสHeader(chunk, userID);
             address = addressRemote;
             portWithRandomLog = `${portRemote} ${isUDP ? 'udp' : 'tcp'} `;
             if (hasError) {
@@ -391,7 +429,6 @@ async function วเลสOverWSHandler(request, whitelist, blacklist) {
         webSocket: client,
     });
 }
-
 
 /**
  * Handles outbound TCP connections.
