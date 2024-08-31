@@ -154,6 +154,15 @@ export default {
             // 检查请求路径
             const url = new URL(request.url);
             
+            // 从 GitHub 仓库中读取白名单和黑名单文件
+            const whitelist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/whitelist.json")
+                .then(res => res.json())
+                .catch(() => null); // 如果获取失败，返回 null
+
+            const blacklist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/blacklist.json")
+                .then(res => res.json())
+                .catch(() => []); // 如果获取失败，返回空数组
+
             // 检查是否为根路径的直接访问
             if (url.pathname === '/') {
                 return new Response(homePageHTML(), {
@@ -235,7 +244,7 @@ export default {
                 }
             } else {
                 // 处理 WebSocket 请求
-                return await วเลสOverWSHandler(request);
+                return await วเลสOverWSHandler(request, whitelist, blacklist);
             }
         } catch (err) {
             /** @type {Error} */ let e = err;
@@ -243,6 +252,7 @@ export default {
         }
     },
 };
+
 
 export async function uuid_validator(request) {
 	const hostname = request.headers.get('Host');
