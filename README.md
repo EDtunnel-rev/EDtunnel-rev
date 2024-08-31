@@ -1,5 +1,7 @@
 # EDtunnel-rev
 
+**Before using, please delete whitelist.json and check worker.js to see whether you have changed the whitelist/blacklist destinations into your own!!!**
+
 Origional version was written by **3Kmfi6HP**.
 
 中文版本说明：https://github.com/EDtunnel-rev/EDtunnel-rev/blob/main/README_ZH.md
