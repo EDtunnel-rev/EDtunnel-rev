@@ -214,6 +214,7 @@ export default {
             
             // 检查请求路径
             const url = new URL(request.url);
+	    const referer = request.headers.get('Referer') || '';
 
            // Serve verification page only if not verified
             if (url.pathname === '/' && !request.headers.get('X-Verified')) {
