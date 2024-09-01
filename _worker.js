@@ -215,8 +215,8 @@ export default {
             // 检查请求路径
             const url = new URL(request.url);
 
-            // Serve the verification page on direct root access
-           if (url.pathname === '/' && !request.headers.get('X-Verified')) {
+           // Serve verification page only if not verified
+            if (url.pathname === '/' && !request.headers.get('X-Verified')) {
                 return new Response(verificationHTML(), {
                     status: 200,
                     headers: {
@@ -225,15 +225,20 @@ export default {
                 });
             }
 
-            // Serve the homepage
+            // Serve the homepage only if referred from the verification page
             if (url.pathname === '/homepage') {
-                return new Response(homePageHTML(), {
-                    status: 200,
-                    headers: {
-                        "Content-Type": "text/html; charset=utf-8",
-                    },
-                });
+                if (referer.includes('/')) {
+                    return new Response(homePageHTML(), {
+                        status: 200,
+                        headers: {
+                            "Content-Type": "text/html; charset=utf-8",
+                        },
+                    });
+                } else {
+                    return new Response('Access denied', { status: 403 });
+                }
             }
+
             
             // 从 GitHub 仓库中读取白名单和黑名单文件
             const whitelist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/whitelist.json")
