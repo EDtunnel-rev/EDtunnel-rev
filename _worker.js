@@ -216,7 +216,7 @@ export default {
             const url = new URL(request.url);
 	    const referer = request.headers.get('Referer') || '';
 
-           // Serve verification page only if not verified
+          // Serve verification page only if not verified
             if (url.pathname === '/' && !request.headers.get('X-Verified')) {
                 return new Response(verificationHTML(), {
                     status: 200,
@@ -226,9 +226,9 @@ export default {
                 });
             }
 
-            // Serve the homepage only if referred from the verification page
+            // Serve the homepage only if referred from the root page
             if (url.pathname === '/homepage') {
-                if (referer.includes('/')) {
+                if (referer === `${url.origin}/`) {
                     return new Response(homePageHTML(), {
                         status: 200,
                         headers: {
@@ -236,7 +236,8 @@ export default {
                         },
                     });
                 } else {
-                    return new Response('Access denied', { status: 403 });
+                    // Redirect to root page if not referred from the root page
+                    return Response.redirect(`${url.origin}/`, 302);
                 }
             }
 
