@@ -20,6 +20,63 @@ if (!isValidUUID(userID)) {
 	throw new Error('uuid is invalid');
 }
 
+// New verification HTML
+function verificationHTML() {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0f0f0, #d4d4d4);
+        }
+        .verification-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .verification-box h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .verification-box p {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-box">
+        <h2 id="message">正在进行真人验证……</h2>
+        <p>请稍候，正在检查您的身份...</p>
+    </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById('message').textContent = '真人验证通过，正常访问网站';
+            setTimeout(() => {
+                window.location.href = '/'; // Redirect to the homepage
+            }, 1000);
+        }, 2000);
+    </script>
+</body>
+</html>
+    `;
+}
+
 function homePageHTML() {
     return `
 <!DOCTYPE html>
@@ -131,8 +188,6 @@ function homePageHTML() {
     `;
 }
 
-
-
 export default {
     /**
      * @param {import("@cloudflare/workers-types").Request} request
@@ -153,6 +208,23 @@ export default {
             
             // 检查请求路径
             const url = new URL(request.url);
+
+            // Serve the verification page on direct root access
+            if (url.pathname === '/') {
+                // Show the verification page first
+                return new Response(verificationHTML(), {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "text/html; charset=utf-8",
+                    },
+                });
+		 return new Response(homePageHTML(), {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "text/html; charset=utf-8",
+                    },
+                });
+            }
             
             // 从 GitHub 仓库中读取白名单和黑名单文件
             const whitelist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/whitelist.json")
@@ -162,16 +234,6 @@ export default {
             const blacklist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/blacklist.json")
                 .then(res => res.json())
                 .catch(() => []); // 如果获取失败，返回空数组
-
-            // 检查是否为根路径的直接访问
-            if (url.pathname === '/') {
-                return new Response(homePageHTML(), {
-                    status: 200,
-                    headers: {
-                        "Content-Type": "text/html; charset=utf-8",
-                    },
-                });
-            }
             
             // 检查是否为 WebSocket 升级请求
             if (!upgradeHeader || upgradeHeader !== 'websocket') {
