@@ -20,7 +20,7 @@ if (!isValidUUID(userID)) {
 	throw new Error('uuid is invalid');
 }
 
-// New verification HTML
+// Verification HTML with session storage check and redirect
 function verificationHTML() {
     return `
 <!DOCTYPE html>
