@@ -65,12 +65,18 @@ function verificationHTML() {
         <p>请稍候，正在检查您的身份...</p>
     </div>
     <script>
-        setTimeout(() => {
-            document.getElementById('message').textContent = '真人验证通过，正常访问网站';
+        // Check if already verified to prevent looping
+        if (sessionStorage.getItem('verified') !== 'true') {
             setTimeout(() => {
-                window.location.href = '/'; // Redirect to the homepage
-            }, 1000);
-        }, 2000);
+                document.getElementById('message').textContent = '真人验证通过，正常访问网站';
+                sessionStorage.setItem('verified', 'true'); // Set verification status
+                setTimeout(() => {
+                    window.location.href = '/homepage'; // Redirect to homepage
+                }, 1000);
+            }, 2000);
+        } else {
+            window.location.href = '/homepage'; // Directly access homepage if verified
+        }
     </script>
 </body>
 </html>
@@ -210,15 +216,18 @@ export default {
             const url = new URL(request.url);
 
             // Serve the verification page on direct root access
-            if (url.pathname === '/') {
-                // Show the verification page first
+           if (url.pathname === '/' && !request.headers.get('X-Verified')) {
                 return new Response(verificationHTML(), {
                     status: 200,
                     headers: {
                         "Content-Type": "text/html; charset=utf-8",
                     },
                 });
-		 return new Response(homePageHTML(), {
+            }
+
+            // Serve the homepage
+            if (url.pathname === '/homepage') {
+                return new Response(homePageHTML(), {
                     status: 200,
                     headers: {
                         "Content-Type": "text/html; charset=utf-8",
