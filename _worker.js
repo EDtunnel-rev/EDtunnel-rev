@@ -29,45 +29,31 @@ function homePageHTML() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDtunnel-rev - VLESS Proxy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             min-height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
-            color: #444;
+            background-color: #f0f0f0;
         }
         .sidebar {
             width: 250px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
+            background-color: #333;
+            color: #fff;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-        .sidebar h2 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #34495e;
-            padding-bottom: 10px;
+            align-items: flex-start;
         }
         .sidebar a {
-            color: #ecf0f1;
+            color: #fff;
             text-decoration: none;
             margin-bottom: 15px;
             font-size: 18px;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s;
         }
         .sidebar a:hover {
-            color: #1abc9c;
-        }
-        .sidebar a i {
-            margin-right: 10px;
+            text-decoration: underline;
         }
         .main-content {
             flex: 1;
@@ -75,139 +61,56 @@ function homePageHTML() {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
-            background: linear-gradient(to right, #ecf0f1, #bdc3c7);
-            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
         }
         h1 {
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 30px;
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
         }
         .content {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-        .content h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #2980b9;
-        }
-        .content p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            padding: 12px;
-            font-size: 16px;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            padding: 12px 25px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #1abc9c;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        button:hover {
-            background-color: #16a085;
-            transform: translateY(-2px);
+            margin: 20px;
         }
         .special-thanks {
             margin-top: 50px;
-        }
-        .special-thanks p {
-            margin-bottom: 10px;
-        }
-        .special-thanks a {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .special-thanks a:hover {
-            color: #2980b9;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: static;
-                padding: 10px 20px;
-                display: flex;
-                justify-content: center;
-            }
-            .sidebar h2 {
-                margin-bottom: 10px;
-                font-size: 20px;
-            }
-            .sidebar a {
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 28px;
-            }
-            .content {
-                padding: 15px;
-            }
-            .content h2 {
-                font-size: 24px;
-            }
-            input[type="text"] {
-                font-size: 14px;
-                padding: 10px;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- 侧边栏 -->
     <div class="sidebar">
-        <div>
-            <h2>Navigation</h2>
-            <a href="https://edt.us.kg" target="_blank"><i class="fas fa-info-circle"></i> Project Overview</a>
-            <a href="https://t.me/edtunrev" target="_blank"><i class="fab fa-telegram"></i> Telegram Group</a>
-        </div>
-        <div>
-            <a href="https://github.com/EDtunnel-rev/EDtunnel-rev" target="_blank"><i class="fab fa-github"></i> GitHub Repository</a>
-        </div>
+        <h2>导航</h2>
+        <a href="https://edt.us.kg" target="_blank">项目说明</a>
+        <a href="https://t.me/edtunrev" target="_blank">Telegram交流群</a>
     </div>
 
-    <!-- Main Content -->
+    <!-- 主内容 -->
     <div class="main-content">
         <h1>EDtunnel-rev - The Best VLESS Proxy Based on Cloudflare Pages</h1>
         <div class="content">
             <h2>Welcome to EDtunnel-rev!</h2>
-            <p>This tool provides a robust and efficient way to use the VLESS proxy protocol using Cloudflare Pages. Enter your UUID below to generate a custom VLESS configuration page.</p>
+            <p>This tool provides a robust and efficient way to use the VLESS proxy protocol using Cloudflare Pages. Below is an input field where you can enter a UUID to generate a custom VLESS configuration page.</p>
             <input type="text" id="uuidInput" placeholder="Enter your UUID here">
             <button onclick="redirectToUUID()">Generate Configuration</button>
 
             <script>
                 function redirectToUUID() {
-                    const uuid = document.getElementById('uuidInput').value.trim();
+                    const uuid = document.getElementById('uuidInput').value;
                     if (uuid) {
-                        window.location.href = '/' + encodeURIComponent(uuid);
+                        window.location.href = '/' + uuid;
                     } else {
                         alert('Please enter a valid UUID!');
                     }
@@ -216,16 +119,15 @@ function homePageHTML() {
 
             <div class="special-thanks">
                 <h2>Special Thanks</h2>
-                <p>1. Contributors to this project, whether their branches were merged or not. Thank you, @rayhanbone, @kardus911, and others! (See them at <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/pulls" target="_blank">pull requests</a> and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/graphs/contributors" target="_blank">contributors</a>)</p>
-                <p>2. Everyone who has forked, starred, or watched this repository. (Check out the <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/watchers" target="_blank">watchers</a>, <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/stargazers" target="_blank">stargazers</a>, and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/forks" target="_blank">forks</a>)</p>
-                <p>3. Special recognition to the community from linux.do for their support and contributions to this repository.</p>
+                <p>1. Github users who contribute to this program, no matter whether their branches are merged by the owner. They're @rayhanbone, @kardus911, and others. (See them at <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/pulls" target="_blank">pull requests</a> and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/graphs/contributors" target="_blank">contributors</a>)</p>
+                <p>2. Those who have forked, starred, and watched this repository. (See them at <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/watchers" target="_blank">watchers</a>, <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/stargazers" target="_blank">stargazers</a>, and <a href="https://github.com/EDtunnel-rev/EDtunnel-rev/forks" target="_blank">forks</a>)</p>
+                <p>3. All people from linux.do. They supported me and helped me with this repository.</p>
             </div>
         </div>
     </div>
 
 </body>
 </html>
-
     `;
 }
 
@@ -252,15 +154,6 @@ export default {
             // 检查请求路径
             const url = new URL(request.url);
             
-            // 从 GitHub 仓库中读取白名单和黑名单文件
-            const whitelist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/whitelist.json")
-                .then(res => res.json())
-                .catch(() => null); // 如果获取失败，返回 null
-
-            const blacklist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/blacklist.json")
-                .then(res => res.json())
-                .catch(() => []); // 如果获取失败，返回空数组
-
             // 检查是否为根路径的直接访问
             if (url.pathname === '/') {
                 return new Response(homePageHTML(), {
@@ -342,7 +235,7 @@ export default {
                 }
             } else {
                 // 处理 WebSocket 请求
-                return await วเลสOverWSHandler(request, whitelist, blacklist);
+                return await วเลสOverWSHandler(request);
             }
         } catch (err) {
             /** @type {Error} */ let e = err;
@@ -350,7 +243,6 @@ export default {
         }
     },
 };
-
 
 export async function uuid_validator(request) {
 	const hostname = request.headers.get('Host');
@@ -381,115 +273,97 @@ export async function hashHex_f(string) {
 /**
  * Handles วเลส over WebSocket requests by creating a WebSocket pair, accepting the WebSocket connection, and processing the วเลส header.
  * @param {import("@cloudflare/workers-types").Request} request The incoming request object.
- * @param {Array|null} whitelist The array of whitelisted domains or null if not in use.
- * @param {Array} blacklist The array of blacklisted domains.
  * @returns {Promise<Response>} A Promise that resolves to a WebSocket response object.
  */
-async function วเลสOverWSHandler(request, whitelist, blacklist) {
-    const webSocketPair = new WebSocketPair();
-    const [client, webSocket] = Object.values(webSocketPair);
-    webSocket.accept();
+async function วเลสOverWSHandler(request) {
+	const webSocketPair = new WebSocketPair();
+	const [client, webSocket] = Object.values(webSocketPair);
+	webSocket.accept();
 
-    let address = '';
-    let portWithRandomLog = '';
-    let currentDate = new Date();
-    const log = (/** @type {string} */ info, /** @type {string | undefined} */ event) => {
-        console.log(`[${currentDate} ${address}:${portWithRandomLog}] ${info}`, event || '');
-    };
-    const earlyDataHeader = request.headers.get('sec-websocket-protocol') || '';
+	let address = '';
+	let portWithRandomLog = '';
+	let currentDate = new Date();
+	const log = (/** @type {string} */ info, /** @type {string | undefined} */ event) => {
+		console.log(`[${currentDate} ${address}:${portWithRandomLog}] ${info}`, event || '');
+	};
+	const earlyDataHeader = request.headers.get('sec-websocket-protocol') || '';
 
-    // 获取目标域名或 IP 地址
-    const targetHost = new URL(request.url).hostname;
+	const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
 
-    // 检查白名单和黑名单
-    if (whitelist && !whitelist.includes(targetHost)) {
-        return new Response('Website is blocked by your ISP. If you are the ISP itself, please add the website to your whitelist.', {
-            status: 403,
-            headers: {
-                "Content-Type": "text/html; charset=utf-8",
-            },
-        });
-    } else if (!whitelist && blacklist.includes(targetHost)) {
-        return new Response('Website is blocked by your ISP. If you are the ISP itself, please remove the website from your blacklist.', {
-            status: 403,
-            headers: {
-                "Content-Type": "text/html; charset=utf-8",
-            },
-        });
-    }
+	/** @type {{ value: import("@cloudflare/workers-types").Socket | null}}*/
+	let remoteSocketWapper = {
+		value: null,
+	};
+	let udpStreamWrite = null;
+	let isDns = false;
 
-    const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
+	// ws --> remote
+	readableWebSocketStream.pipeTo(new WritableStream({
+		async write(chunk, controller) {
+			if (isDns && udpStreamWrite) {
+				return udpStreamWrite(chunk);
+			}
+			if (remoteSocketWapper.value) {
+				const writer = remoteSocketWapper.value.writable.getWriter()
+				await writer.write(chunk);
+				writer.releaseLock();
+				return;
+			}
 
-    // WebSocket 代理逻辑
-    /** @type {{ value: import("@cloudflare/workers-types").Socket | null}}*/
-    let remoteSocketWapper = {
-        value: null,
-    };
-    let udpStreamWrite = null;
-    let isDns = false;
+			const {
+				hasError,
+				message,
+				portRemote = 443,
+				addressRemote = '',
+				rawDataIndex,
+				วเลสVersion = new Uint8Array([0, 0]),
+				isUDP,
+			} = processวเลสHeader(chunk, userID);
+			address = addressRemote;
+			portWithRandomLog = `${portRemote} ${isUDP ? 'udp' : 'tcp'} `;
+			if (hasError) {
+				// controller.error(message);
+				throw new Error(message); // cf seems has bug, controller.error will not end stream
+			}
 
-    readableWebSocketStream.pipeTo(new WritableStream({
-        async write(chunk, controller) {
-            if (isDns && udpStreamWrite) {
-                return udpStreamWrite(chunk);
-            }
-            if (remoteSocketWapper.value) {
-                const writer = remoteSocketWapper.value.writable.getWriter();
-                await writer.write(chunk);
-                writer.releaseLock();
-                return;
-            }
+			// If UDP and not DNS port, close it
+			if (isUDP && portRemote !== 53) {
+				throw new Error('UDP proxy only enabled for DNS which is port 53');
+				// cf seems has bug, controller.error will not end stream
+			}
 
-            const {
-                hasError,
-                message,
-                portRemote = 443,
-                addressRemote = '',
-                rawDataIndex,
-                วเลสVersion = new Uint8Array([0, 0]),
-                isUDP,
-            } = processวเลสHeader(chunk, userID);
-            address = addressRemote;
-            portWithRandomLog = `${portRemote} ${isUDP ? 'udp' : 'tcp'} `;
-            if (hasError) {
-                throw new Error(message);
-            }
+			if (isUDP && portRemote === 53) {
+				isDns = true;
+			}
 
-            if (isUDP && portRemote !== 53) {
-                throw new Error('UDP proxy only enabled for DNS which is port 53');
-            }
+			// ["version", "附加信息长度 N"]
+			const วเลสResponseHeader = new Uint8Array([วเลสVersion[0], 0]);
+			const rawClientData = chunk.slice(rawDataIndex);
 
-            if (isUDP && portRemote === 53) {
-                isDns = true;
-            }
+			// TODO: support udp here when cf runtime has udp support
+			if (isDns) {
+				const { write } = await handleUDPOutBound(webSocket, วเลสResponseHeader, log);
+				udpStreamWrite = write;
+				udpStreamWrite(rawClientData);
+				return;
+			}
+			handleTCPOutBound(remoteSocketWapper, addressRemote, portRemote, rawClientData, webSocket, วเลสResponseHeader, log);
+		},
+		close() {
+			log(`readableWebSocketStream is close`);
+		},
+		abort(reason) {
+			log(`readableWebSocketStream is abort`, JSON.stringify(reason));
+		},
+	})).catch((err) => {
+		log('readableWebSocketStream pipeTo error', err);
+	});
 
-            const วเลสResponseHeader = new Uint8Array([วเลสVersion[0], 0]);
-            const rawClientData = chunk.slice(rawDataIndex);
-
-            if (isDns) {
-                const { write } = await handleUDPOutBound(webSocket, วเลสResponseHeader, log);
-                udpStreamWrite = write;
-                udpStreamWrite(rawClientData);
-                return;
-            }
-            handleTCPOutBound(remoteSocketWapper, addressRemote, portRemote, rawClientData, webSocket, วเลสResponseHeader, log);
-        },
-        close() {
-            log(`readableWebSocketStream is close`);
-        },
-        abort(reason) {
-            log(`readableWebSocketStream is abort`, JSON.stringify(reason));
-        },
-    })).catch((err) => {
-        log('readableWebSocketStream pipeTo error', err);
-    });
-
-    return new Response(null, {
-        status: 101,
-        webSocket: client,
-    });
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
 }
-
 
 /**
  * Handles outbound TCP connections.
