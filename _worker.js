@@ -252,6 +252,15 @@ export default {
             // 检查请求路径
             const url = new URL(request.url);
             
+            // 从 GitHub 仓库中读取白名单和黑名单文件
+            const whitelist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/whitelist.json")
+                .then(res => res.json())
+                .catch(() => null); // 如果获取失败，返回 null
+
+            const blacklist = await fetch("https://raw.githubusercontent.com/EDtunnel-rev/EDtunnel-rev/main/blacklist.json")
+                .then(res => res.json())
+                .catch(() => []); // 如果获取失败，返回空数组
+
             // 检查是否为根路径的直接访问
             if (url.pathname === '/') {
                 return new Response(homePageHTML(), {
@@ -333,7 +342,7 @@ export default {
                 }
             } else {
                 // 处理 WebSocket 请求
-                return await วเลสOverWSHandler(request);
+                return await วเลสOverWSHandler(request, whitelist, blacklist);
             }
         } catch (err) {
             /** @type {Error} */ let e = err;
@@ -341,6 +350,7 @@ export default {
         }
     },
 };
+
 
 export async function uuid_validator(request) {
 	const hostname = request.headers.get('Host');
@@ -371,97 +381,115 @@ export async function hashHex_f(string) {
 /**
  * Handles วเลส over WebSocket requests by creating a WebSocket pair, accepting the WebSocket connection, and processing the วเลส header.
  * @param {import("@cloudflare/workers-types").Request} request The incoming request object.
+ * @param {Array|null} whitelist The array of whitelisted domains or null if not in use.
+ * @param {Array} blacklist The array of blacklisted domains.
  * @returns {Promise<Response>} A Promise that resolves to a WebSocket response object.
  */
-async function วเลสOverWSHandler(request) {
-	const webSocketPair = new WebSocketPair();
-	const [client, webSocket] = Object.values(webSocketPair);
-	webSocket.accept();
+async function วเลสOverWSHandler(request, whitelist, blacklist) {
+    const webSocketPair = new WebSocketPair();
+    const [client, webSocket] = Object.values(webSocketPair);
+    webSocket.accept();
 
-	let address = '';
-	let portWithRandomLog = '';
-	let currentDate = new Date();
-	const log = (/** @type {string} */ info, /** @type {string | undefined} */ event) => {
-		console.log(`[${currentDate} ${address}:${portWithRandomLog}] ${info}`, event || '');
-	};
-	const earlyDataHeader = request.headers.get('sec-websocket-protocol') || '';
+    let address = '';
+    let portWithRandomLog = '';
+    let currentDate = new Date();
+    const log = (/** @type {string} */ info, /** @type {string | undefined} */ event) => {
+        console.log(`[${currentDate} ${address}:${portWithRandomLog}] ${info}`, event || '');
+    };
+    const earlyDataHeader = request.headers.get('sec-websocket-protocol') || '';
 
-	const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
+    // 获取目标域名或 IP 地址
+    const targetHost = new URL(request.url).hostname;
 
-	/** @type {{ value: import("@cloudflare/workers-types").Socket | null}}*/
-	let remoteSocketWapper = {
-		value: null,
-	};
-	let udpStreamWrite = null;
-	let isDns = false;
+    // 检查白名单和黑名单
+    if (whitelist && !whitelist.includes(targetHost)) {
+        return new Response('Website is blocked by your ISP. If you are the ISP itself, please add the website to your whitelist.', {
+            status: 403,
+            headers: {
+                "Content-Type": "text/html; charset=utf-8",
+            },
+        });
+    } else if (!whitelist && blacklist.includes(targetHost)) {
+        return new Response('Website is blocked by your ISP. If you are the ISP itself, please remove the website from your blacklist.', {
+            status: 403,
+            headers: {
+                "Content-Type": "text/html; charset=utf-8",
+            },
+        });
+    }
 
-	// ws --> remote
-	readableWebSocketStream.pipeTo(new WritableStream({
-		async write(chunk, controller) {
-			if (isDns && udpStreamWrite) {
-				return udpStreamWrite(chunk);
-			}
-			if (remoteSocketWapper.value) {
-				const writer = remoteSocketWapper.value.writable.getWriter()
-				await writer.write(chunk);
-				writer.releaseLock();
-				return;
-			}
+    const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
 
-			const {
-				hasError,
-				message,
-				portRemote = 443,
-				addressRemote = '',
-				rawDataIndex,
-				วเลสVersion = new Uint8Array([0, 0]),
-				isUDP,
-			} = processวเลสHeader(chunk, userID);
-			address = addressRemote;
-			portWithRandomLog = `${portRemote} ${isUDP ? 'udp' : 'tcp'} `;
-			if (hasError) {
-				// controller.error(message);
-				throw new Error(message); // cf seems has bug, controller.error will not end stream
-			}
+    // WebSocket 代理逻辑
+    /** @type {{ value: import("@cloudflare/workers-types").Socket | null}}*/
+    let remoteSocketWapper = {
+        value: null,
+    };
+    let udpStreamWrite = null;
+    let isDns = false;
 
-			// If UDP and not DNS port, close it
-			if (isUDP && portRemote !== 53) {
-				throw new Error('UDP proxy only enabled for DNS which is port 53');
-				// cf seems has bug, controller.error will not end stream
-			}
+    readableWebSocketStream.pipeTo(new WritableStream({
+        async write(chunk, controller) {
+            if (isDns && udpStreamWrite) {
+                return udpStreamWrite(chunk);
+            }
+            if (remoteSocketWapper.value) {
+                const writer = remoteSocketWapper.value.writable.getWriter();
+                await writer.write(chunk);
+                writer.releaseLock();
+                return;
+            }
 
-			if (isUDP && portRemote === 53) {
-				isDns = true;
-			}
+            const {
+                hasError,
+                message,
+                portRemote = 443,
+                addressRemote = '',
+                rawDataIndex,
+                วเลสVersion = new Uint8Array([0, 0]),
+                isUDP,
+            } = processวเลสHeader(chunk, userID);
+            address = addressRemote;
+            portWithRandomLog = `${portRemote} ${isUDP ? 'udp' : 'tcp'} `;
+            if (hasError) {
+                throw new Error(message);
+            }
 
-			// ["version", "附加信息长度 N"]
-			const วเลสResponseHeader = new Uint8Array([วเลสVersion[0], 0]);
-			const rawClientData = chunk.slice(rawDataIndex);
+            if (isUDP && portRemote !== 53) {
+                throw new Error('UDP proxy only enabled for DNS which is port 53');
+            }
 
-			// TODO: support udp here when cf runtime has udp support
-			if (isDns) {
-				const { write } = await handleUDPOutBound(webSocket, วเลสResponseHeader, log);
-				udpStreamWrite = write;
-				udpStreamWrite(rawClientData);
-				return;
-			}
-			handleTCPOutBound(remoteSocketWapper, addressRemote, portRemote, rawClientData, webSocket, วเลสResponseHeader, log);
-		},
-		close() {
-			log(`readableWebSocketStream is close`);
-		},
-		abort(reason) {
-			log(`readableWebSocketStream is abort`, JSON.stringify(reason));
-		},
-	})).catch((err) => {
-		log('readableWebSocketStream pipeTo error', err);
-	});
+            if (isUDP && portRemote === 53) {
+                isDns = true;
+            }
 
-	return new Response(null, {
-		status: 101,
-		webSocket: client,
-	});
+            const วเลสResponseHeader = new Uint8Array([วเลสVersion[0], 0]);
+            const rawClientData = chunk.slice(rawDataIndex);
+
+            if (isDns) {
+                const { write } = await handleUDPOutBound(webSocket, วเลสResponseHeader, log);
+                udpStreamWrite = write;
+                udpStreamWrite(rawClientData);
+                return;
+            }
+            handleTCPOutBound(remoteSocketWapper, addressRemote, portRemote, rawClientData, webSocket, วเลสResponseHeader, log);
+        },
+        close() {
+            log(`readableWebSocketStream is close`);
+        },
+        abort(reason) {
+            log(`readableWebSocketStream is abort`, JSON.stringify(reason));
+        },
+    })).catch((err) => {
+        log('readableWebSocketStream pipeTo error', err);
+    });
+
+    return new Response(null, {
+        status: 101,
+        webSocket: client,
+    });
 }
+
 
 /**
  * Handles outbound TCP connections.
