@@ -1,5 +1,7 @@
 # EDtunnel-rev
 
+黑白名单已经被回退并且保存到分支blackwhite。下次更新前，我会仔细作验证，今天没时间了，主要是更新前没有仔细验证。对于造成的不便还请各位大佬谅解。
+
 Origional version was written by **3Kmfi6HP**.
 
 中文版本说明：https://github.com/EDtunnel-rev/EDtunnel-rev/blob/main/README_ZH.md
