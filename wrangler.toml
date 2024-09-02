@@ -1,19 +1,12 @@
-name = "server-cfsg1" # todo
+name = "server-cfaus1" # todo
 #name = "cf-worker-connect-test" # todo
 #main = "test/worker/cf-cdn-cgi-trace2.js"
 #main = "test/worker/worker-connect-test.js"
 main = "_worker.js"
 compatibility_date = "2023-05-26"
 [[routes]]
-pattern = "cfsg1.ovh.notrap.my.id"
+pattern = "cfaus1.ovh.notrap.my.id"
 custom_domain = true
-[[routes]]
-pattern = "quiz.int.vidio.com.cfsg1.ovh.notrap.my.id"
-custom_domain = true
-[[routes]]
-pattern = "quiz.vidio.com.cfsg1.ovh.notrap.my.id"
-custom_domain = true
-
 
 [vars]
 # UUID = "d342d11e-d424-4583-b36e-524ab1f0afa4"
@@ -22,4 +15,4 @@ custom_domain = true
 # NODE_ID = "1"
 # API_TOKEN = "example_dev_token"
 # API_HOST = "api.v2board.com"
-UUID = "67a1c4cd-41ee-48ec-b254-3c32b9d8a362"
+UUID = "9a866936-cc18-4248-9720-87d6dfecd358"
