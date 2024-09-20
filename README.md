@@ -1,6 +1,20 @@
 # EDtunnel-rev
 
-黑白名单已经被回退并且保存到分支blackwhite。下次更新前，我会仔细作验证，今天没时间了，主要是更新前没有仔细验证。对于造成的不便还请各位大佬谅解。
+简述更新方向：
+
+1.限流选项
+
+2.黑白名单重新上线
+
+3.流量混淆
+
+4.新的HTML界面
+
+5.自带browser基于项目
+
+6.Trojan集成
+
+
 
 Origional version was written by **3Kmfi6HP**.
 
