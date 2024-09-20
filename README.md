@@ -14,7 +14,7 @@
 
 6.Trojan集成
 
-本周末争取上线1-5。各位可以拭目以待。
+本周末争取上线1-5。各位可以拭目以待。希望赞数超过6Kmfi6HP。
 
 Origional version was written by **3Kmfi6HP**.
 
