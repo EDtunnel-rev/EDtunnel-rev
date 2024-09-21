@@ -33,148 +33,248 @@ function homePageHTML() {
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            min-height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
-            color: #444;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            background: linear-gradient(135deg, #1d1f21 0%, #34495e 100%);
             color: #ecf0f1;
-            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(44, 62, 80, 0.9);
+            color: #ecf0f1;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
         }
+
         .sidebar h2 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #34495e;
+            font-size: 24px;
+            margin-bottom: 25px;
             padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .sidebar a {
+            font-size: 20px;
+            margin-bottom: 20px;
             color: #ecf0f1;
             text-decoration: none;
-            margin-bottom: 15px;
-            font-size: 18px;
             display: flex;
             align-items: center;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
+
+        .sidebar a i {
+            margin-right: 15px;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+
         .sidebar a:hover {
             color: #1abc9c;
         }
-        .sidebar a i {
-            margin-right: 10px;
+
+        .sidebar a:hover i {
+            transform: rotate(360deg);
         }
+
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
-            background: linear-gradient(to right, #ecf0f1, #bdc3c7);
-            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            background: linear-gradient(to right, #2c3e50, #34495e);
+            position: relative;
         }
+
+        .main-content:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+            pointer-events: none;
+            animation: pulse 5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(0.9);
+            }
+        }
+
         h1 {
-            font-size: 36px;
-            color: #2c3e50;
+            font-size: 42px;
+            color: #ecf0f1;
+            text-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
             margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
         }
+
         .content {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
         }
+
         .content h2 {
-            font-size: 28px;
+            font-size: 30px;
             margin-bottom: 20px;
-            color: #2980b9;
+            color: #1abc9c;
         }
+
         .content p {
             font-size: 18px;
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 20px;
         }
+
         input[type="text"] {
-            padding: 12px;
+            padding: 15px;
             font-size: 16px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             margin-bottom: 20px;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #1abc9c;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         button {
-            padding: 12px 25px;
+            padding: 15px 30px;
             font-size: 18px;
             color: #fff;
             background-color: #1abc9c;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.5);
+            transition: all 0.3s ease, transform 0.2s ease;
+            position: relative;
+            z-index: 2;
         }
+
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 10px rgba(26, 188, 156, 0.3);
+        }
+
         button:hover {
             background-color: #16a085;
-            transform: translateY(-2px);
         }
+
+        button:hover::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 20px;
+            border: 2px solid rgba(26, 188, 156, 0.6);
+            opacity: 0;
+            animation: hover-effect 0.4s forwards;
+        }
+
+        @keyframes hover-effect {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
         .special-thanks {
             margin-top: 50px;
+            position: relative;
+            z-index: 2;
         }
+
         .special-thanks p {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
+
         .special-thanks a {
-            color: #3498db;
+            color: #1abc9c;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
         }
+
         .special-thanks a:hover {
-            color: #2980b9;
+            color: #16a085;
+            text-shadow: 0 5px 15px rgba(26, 188, 156, 0.5);
         }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
-                position: static;
-                padding: 10px 20px;
-                display: flex;
-                justify-content: center;
+                height: auto;
+                padding: 15px 20px;
+                box-shadow: none;
             }
-            .sidebar h2 {
-                margin-bottom: 10px;
-                font-size: 20px;
-            }
-            .sidebar a {
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
+
             .main-content {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .content {
                 padding: 20px;
             }
-            h1 {
-                font-size: 28px;
-            }
-            .content {
-                padding: 15px;
-            }
+
             .content h2 {
                 font-size: 24px;
             }
+
             input[type="text"] {
                 font-size: 14px;
-                padding: 10px;
+                padding: 12px;
             }
+
             button {
-                padding: 10px 20px;
+                padding: 12px 25px;
                 font-size: 16px;
             }
         }
@@ -225,6 +325,7 @@ function homePageHTML() {
 
 </body>
 </html>
+
 
     `;
 }
