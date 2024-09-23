@@ -286,7 +286,7 @@ function homePageHTML() {
     <div class="sidebar">
         <div>
             <h2>Navigation</h2>
-            <a href="https://edt.us.kg" target="_blank"><i class="fas fa-info-circle"></i> Project Overview</a>
+            <a href="wa.me/+6285162223311" target="_blank"><i class="fas fa-info-circle"></i> Order Akun </a>
             <a href="https://t.me/edtunrev" target="_blank"><i class="fab fa-telegram"></i> Telegram Group</a>
         </div>
         <div>
