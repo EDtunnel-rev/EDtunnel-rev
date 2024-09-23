@@ -296,9 +296,9 @@ function homePageHTML() {
 
     <!-- Main Content -->
     <div class="main-content">
-        <h1>EDtunnel-rev - The Best VLESS Proxy Based on Cloudflare Pages</h1>
+        <h1>HC STORE - Menyediakan VPN Tunneling: SSH, VMESS, VLESS DAN TROJAN</h1>
         <div class="content">
-            <h2>Welcome to EDtunnel-rev!</h2>
+            <h2>Welcome to HC STORE!</h2>
             <p>This tool provides a robust and efficient way to use the VLESS proxy protocol using Cloudflare Pages. Enter your UUID below to generate a custom VLESS configuration page.</p>
             <input type="text" id="uuidInput" placeholder="Enter your UUID here">
             <button onclick="redirectToUUID()">Generate Configuration</button>
