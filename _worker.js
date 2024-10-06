@@ -353,16 +353,6 @@ export default {
             // 检查请求路径
             const url = new URL(request.url);
             
-            // 检查是否为根路径的直接访问
-            if (url.pathname === '/') {
-                return new Response(homePageHTML(), {
-                    status: 200,
-                    headers: {
-                        "Content-Type": "text/html; charset=utf-8",
-                    },
-                });
-            }
-            
             // 检查是否为 WebSocket 升级请求
             if (!upgradeHeader || upgradeHeader !== 'websocket') {
                 switch (url.pathname) {
